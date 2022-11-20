@@ -1,16 +1,16 @@
 import Project from './Project.js'
 
 const projectController = (() => {
-    const createProject = (name, description) => {
+    const create = (name, description) => {
         let newProject = Project(name, description);
         return newProject
     }
 
-    const editProject = () => {
+    const edit = () => {
 
     }
     
-    const deleteProject = () => {
+    const remove = () => {
 
     }
     return {createProject};

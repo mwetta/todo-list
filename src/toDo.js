@@ -2,9 +2,10 @@ import { v4 as uuidv4 } from 'uuid';
 
 const toDo = (title, dueDate, description, priority, notes) => {
     let id = uuidv4;
+    let toDoId = id + '_todo';
     let dateCreated = Date();
 
-    const getId = () => id;
+    const getId = () => toDoId;
     const getDateCreated = () => dateCreated;
     const getTitle = () => title;
     const getDueDate = () => dueDate;

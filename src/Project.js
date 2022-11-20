@@ -1,9 +1,15 @@
+import { v4 as uuidv4 } from 'uuid';
+
 const Project = (projectName, projectDescription) =>
 {
-    const getProjectName = () => projectName;
-    const getProjectDescription = () => projectDescription;
+    let id = uuidv4;
+    let projectId = id + '_project';
 
-    return {getProjectName, getProjectDescription}
+    const getId = () => projectId;
+    const getName = () => projectName;
+    const getDescription = () => projectDescription;
+
+    return {getId, getName, getDescription}
 }
 
 export default Project;
