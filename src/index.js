@@ -1,4 +1,11 @@
-import Project from './Project.js'
+import Project from './Project.js';
+import toDo from './toDo.js';
+import projectController from './projectController.js';
+import toDoController from './toDoController.js'
+import writeToProjectList from './writeToProjectList.js';
+
+projectController.create('clean den', 'this project contains all of the tasks necessary to clean the den');
+
 // UI controls -- click on new project
 // new project = createProject(name, description);
 
@@ -29,16 +36,17 @@ Functionality:
     * delete item / project
     * set priority
     * reorganize
-    */ 
+    * archive
 
 /* information holders:                                                     contain information
         projects: contains information about projects
+            id
             projectTitle
             projectDescription
         todos: contains information about todo items
             id
             dateCreated
-            dueDate
+            dueDate and/or frequency
             title
             description
             priority
@@ -55,9 +63,9 @@ Functionality:
     coordinators:                                                           passes information to other objects so that they can do work
         sendToPresenter: passes UI events to presenter
         writeToProjectList: stores information on relationships between projects and todos 
-
-        sendToStorage: send items to local storage (what items)
-        getFromStorage: get items from local storage (same as above)
+        storageCoordinator
+            sendToStorage: send items to local storage (what items)
+            getFromStorage: get items from local storage (same as above)
 
     controller:                                                             acts as a higher-level, declaratively focused object that coordinates the behavior of lower-level concerns
         projectController: contains functions specific to projects

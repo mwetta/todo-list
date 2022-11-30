@@ -1,9 +1,10 @@
 import Project from './Project.js'
+import writeToProjectList from './writeToProjectList.js'
 
 const projectController = (() => {
     const create = (name, description) => {
         let newProject = Project(name, description);
-        return newProject
+        writeToProjectList.addProject(newProject);
     }
 
     const edit = () => {
@@ -13,7 +14,7 @@ const projectController = (() => {
     const remove = () => {
 
     }
-    return {createProject};
+    return {create};
 })();
 
 export default projectController;
