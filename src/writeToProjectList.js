@@ -26,6 +26,7 @@ const writeToProjectList = (() => {
     const removeProject = (currentProject) => {
         
     }
+    
     return {addProject, removeProject}
 })();
 
