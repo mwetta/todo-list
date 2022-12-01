@@ -5,6 +5,7 @@ import toDoController from './toDoController.js'
 import writeToProjectList from './writeToProjectList.js';
 
 projectController.create('clean den', 'this project contains all of the tasks necessary to clean the den');
+projectController.create('clean kitchen', 'this project contains all of the tasks necessary to clean the kitchen');
 
 // UI controls -- click on new project
 // new project = createProject(name, description);

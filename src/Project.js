@@ -1,16 +1,15 @@
 import { v4 as uuidv4 } from 'uuid';
-import { format, formatDistance, formatRelative, subDays } from 'date-fns'
+import { format } from 'date-fns'
 
 const Project = (projectName, projectDescription) =>
 {
     let id = uuidv4();
-    let projectId = `${id}_project`;
     let date = format(new Date(), 'MM/dd/yyyy');
 
-    const getId = () => projectId;
+    const getId = () => id;
     const getName = () => projectName;
     const getDescription = () => projectDescription;
-    const getProject = () => `projectId: ${projectId}; projectName: ${projectName}; projectDescription: ${projectDescription}`;
+    const getProject = () => `{ projectId: '${id}', projectName: '${projectName}', projectDescription: '${projectDescription}', projectCreationDate: ${date} }`;
     const getDateCreated = () => date;
 
     return {getId, getName, getDescription, getProject, getDateCreated}
