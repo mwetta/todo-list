@@ -18,16 +18,14 @@ const toDo = (name, dueDate, description, priority, notes, project) => {
         };}
     const getToDo = () => 
     `{ toDoId: '${id}', 
-    toDoCreationDate: ${date},
     toDoName: '${name}', 
     toDoDueDate: ${dueDate}, 
     toDoDescription: '${description}', 
     toDoPriority: '${priority}',
     toDoNotes: '${notes}',
     toDoProject: '${notes},
+    toDoCreationDate: ${date},
      }`;
-
-    
 
         return {
             getId,

@@ -3,7 +3,7 @@ import projectController from './projectController.js'
 import Project from './Project.js'
 import storageCoordinator from './storageCoordinator.js'
 
-const writeToProjectList = (() => {
+const projectListController = (() => {
     const projects = () => {
         if (!localStorage.getItem('projects')) 
         {   console.log('does not detect projects')
@@ -26,8 +26,10 @@ const writeToProjectList = (() => {
     const removeProject = (currentProject) => {
         
     }
-    
-    return {addProject, removeProject}
+
+    const getProjectList = () => projects();
+
+    return {addProject, removeProject, getProjectList}
 })();
 
-export default writeToProjectList;
+export default projectListController;
