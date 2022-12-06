@@ -16,7 +16,7 @@ const toDo = (name, dueDate, description, priority, notes, project) => {
         else { 
             // need to reference projectId through UI and reference list
         };}
-    const getToDo = () => 
+    const getToDo = () => { 
     `{ toDoId: '${id}', 
     toDoName: '${name}', 
     toDoDueDate: ${dueDate}, 
@@ -25,7 +25,7 @@ const toDo = (name, dueDate, description, priority, notes, project) => {
     toDoNotes: '${notes}',
     toDoProject: '${notes},
     toDoCreationDate: ${date},
-     }`;
+     }`;}
 
         return {
             getId,
@@ -34,7 +34,9 @@ const toDo = (name, dueDate, description, priority, notes, project) => {
             getDueDate,
             getDescription,
             getPriority,
-            getNotes
+            getNotes,
+            getProject,
+            getToDo
         }
 }
 

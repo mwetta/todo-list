@@ -6,11 +6,9 @@ import storageCoordinator from './storageCoordinator.js'
 const projectListController = (() => {
     const projects = () => {
         if (!localStorage.getItem('projects')) 
-        {   console.log('does not detect projects')
-            let projectList = new Array;
+        {   let projectList = new Array;
             return projectList
         } else { 
-            console.log('does detect projects');
             let projectList = localStorage.getItem('projects');
             let currentProjects = JSON.parse(projectList);
             return currentProjects 
