@@ -11,13 +11,17 @@ const projectListController = (() => {
         } else { 
             let projectList = localStorage.getItem('projects');
             let currentProjects = JSON.parse(projectList);
+            console.log(currentProjects);
             return currentProjects 
         }
     }    
 
     const addProject = (newProject) => {
         let currentProjects = projects();
-        currentProjects.push(newProject.getProject());
+        let text = newProject.getProject();
+        console.log(text);
+        currentProjects.push(text);
+        console.log(currentProjects);
         storageCoordinator.store('projects', JSON.stringify(currentProjects));
     }
 
