@@ -16,7 +16,6 @@ const projectListController = (() => {
                 let newProject = Project(project.name, project.description);
                 newProject.setProject(project);
                 newCurrentProjects.push(newProject);
-                // consider refactoring to use classes and new constructors
             });
             console.log(newCurrentProjects);
             return currentProjects 
@@ -27,7 +26,6 @@ const projectListController = (() => {
         let currentProjects = projects();
         currentProjects.push(newProject.getProject());
         console.log(newProject);
-        // when retrieving projects, how do i get the methods back on them?
         storageCoordinator.store('projects', JSON.stringify(currentProjects));
     }
 
