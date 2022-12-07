@@ -11,8 +11,14 @@ const projectListController = (() => {
         } else { 
             let projectList = localStorage.getItem('projects');
             let currentProjects = JSON.parse(projectList);
-            currentProjects.forEach(project => Object.assign(Project, project));
-            console.log(currentProjects);
+            let newCurrentProjects = new Array;
+            currentProjects.forEach(project => {
+                let newProject = Project(project.name, project.description);
+                newProject.setProject(project);
+                newCurrentProjects.push(newProject);
+                // consider refactoring to use classes and new constructors
+            });
+            console.log(newCurrentProjects);
             return currentProjects 
         }
     }    
@@ -20,7 +26,8 @@ const projectListController = (() => {
     const addProject = (newProject) => {
         let currentProjects = projects();
         currentProjects.push(newProject.getProject());
-        // when retrieving projects, will need to assign prototype Project
+        console.log(newProject);
+        // when retrieving projects, how do i get the methods back on them?
         storageCoordinator.store('projects', JSON.stringify(currentProjects));
     }
 

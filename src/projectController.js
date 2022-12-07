@@ -1,10 +1,10 @@
 import Project from './Project.js'
-import writeToProjectList from './projectListController.js'
+import projectListController from './projectListController.js'
 
 const projectController = (() => {
     const create = (name, description) => {
         let newProject = Project(name, description);
-        writeToProjectList.addProject(newProject);
+        projectListController.addProject(newProject);
     }
 
     const edit = () => {

@@ -16,8 +16,14 @@ const Project = (projectName, projectDescription) =>
         let obj = {'id': id, 'name': name, 'description': description, 'date': date,};
         return obj
     }
+    const setProject = (storedObject) => {
+        id = storedObject.id; 
+        date = storedObject.date;
+        name = storedObject.name;
+        description = storedObject.description;
+    }
 
-    return { getId, getName, getDescription, getDate, getProject }
+    return { getId, getName, getDescription, getDate, getProject, setProject }
 }
 
 export default Project;
