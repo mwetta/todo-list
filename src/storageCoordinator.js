@@ -12,7 +12,6 @@ const storageCoordinator = (() => {
         localStorage.getItem(`${key}`);
     }
 
-
     return {store, retrieve}
 })();
 

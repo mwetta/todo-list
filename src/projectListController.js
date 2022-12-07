@@ -18,10 +18,8 @@ const projectListController = (() => {
 
     const addProject = (newProject) => {
         let currentProjects = projects();
-        let text = newProject.getProject();
-        console.log(text);
-        currentProjects.push(text);
-        console.log(currentProjects);
+        currentProjects.push(newProject.getProject());
+        // when retrieving projects, will need to assign prototype Project
         storageCoordinator.store('projects', JSON.stringify(currentProjects));
     }
 

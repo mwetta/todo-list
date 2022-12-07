@@ -4,15 +4,20 @@ import { format } from 'date-fns'
 const Project = (projectName, projectDescription) =>
 {
     let id = uuidv4();
-    let date = format(new Date(), 'MM/dd/yyyy');
-
+    let date = Date.now();
+    let name = projectName;
+    let description = projectDescription;
+    
     const getId = () => id;
-    const getName = () => projectName;
-    const getDescription = () => projectDescription;
-    const getProject = () => `{ projectId: '${id}', projectName: '${projectName}', projectDescription: '${projectDescription}', projectCreationDate: ${date} }`;
-    const getDateCreated = () => date;
+    const getName = () => name;
+    const getDescription = () => description;
+    const getDate = () => date;
+    const getProject = () => {
+        let obj = {'id': id, 'name': name, 'description': description, 'date': date,};
+        return obj
+    }
 
-    return {getId, getName, getDescription, getProject, getDateCreated}
+    return { getId, getName, getDescription, getDate, getProject }
 }
 
 export default Project;

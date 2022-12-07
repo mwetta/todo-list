@@ -13,12 +13,8 @@ projectController.create('eportfolio', 'all the tasks for eportfolio');
 
 const createDefaultProject = () => {
     let currentProjects = projectListController.getProjectList();
-    console.log(currentProjects);
-    console.log(currentProjects[0].projectName);
-    let checkForDefault = currentProjects.find(currentProject => currentProject.projectName == 'default');
-    console.log(checkForDefault);
-    //think this isn't working because of issues with JSON.stringify and JSON.parse not correctly reading projectName
-    if (checkForDefault === false) {
+    let checkForDefault = currentProjects.find(currentProject => currentProject.name === 'default');
+    if (checkForDefault === undefined) {
         projectController.create('default', 'default project for unassigned tasks')
     }
 }
