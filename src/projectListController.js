@@ -11,6 +11,7 @@ const projectListController = (() => {
         } else { 
             let projectList = localStorage.getItem('projects');
             let currentProjects = JSON.parse(projectList);
+            currentProjects.forEach(project => Object.assign(Project, project));
             console.log(currentProjects);
             return currentProjects 
         }
