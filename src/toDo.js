@@ -17,15 +17,26 @@ const toDo = (name, dueDate, description, priority, notes, project) => {
             // need to reference projectId through UI and reference list
         };}
     const getToDo = () => { 
-    `{ toDoId: '${id}', 
-    toDoName: '${name}', 
-    toDoDueDate: ${dueDate}, 
-    toDoDescription: '${description}', 
-    toDoPriority: '${priority}',
-    toDoNotes: '${notes}',
-    toDoProject: '${notes},
-    toDoCreationDate: ${date},
-     }`;}
+        let obj = {
+            'id': id,
+            'date': date,
+            'name': name,
+            'dueDate': dueDate,
+            'description': description,
+            'priority': priority,
+            'notes': notes
+        }
+        return obj
+    }
+    const setToDo = (storedObject) => {
+        id = storedObject.id; 
+        date = storedObject.date;
+        name = storedObject.name;
+        dueDate = storedObject.dueDate;
+        description = storedObject.description;
+        priority = storedObject.priority;
+        notes = storedObject.notes;
+    }
 
         return {
             getId,
@@ -36,7 +47,8 @@ const toDo = (name, dueDate, description, priority, notes, project) => {
             getPriority,
             getNotes,
             getProject,
-            getToDo
+            getToDo,
+            setToDo
         }
 }
 
