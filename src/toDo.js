@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const toDo = (name, dueDate, description, priority, notes, project) => {
     let id = uuidv4();
-    let date = format(new Date(), 'MM/dd/yyyy')
+    let date = Date.now();
 
     const getId = () => id;
     const getDateCreated = () => date;
@@ -13,9 +13,11 @@ const toDo = (name, dueDate, description, priority, notes, project) => {
     const getNotes = () => notes;
     const getProject = () => {
         if (project === undefined) { return 'default'}
-        else { 
-            // need to reference projectId through UI and reference list
-        };}
+        else {
+            return project // here need to get project.id
+        };
+    
+        }
     const getToDo = () => { 
         let obj = {
             'id': id,
@@ -24,7 +26,8 @@ const toDo = (name, dueDate, description, priority, notes, project) => {
             'dueDate': dueDate,
             'description': description,
             'priority': priority,
-            'notes': notes
+            'notes': notes,
+            'project': getProject() 
         }
         return obj
     }

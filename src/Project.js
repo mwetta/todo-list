@@ -13,7 +13,7 @@ const Project = (projectName, projectDescription) =>
     const getDescription = () => description;
     const getDate = () => date;
     const getProject = () => {
-        let obj = {'id': id, 'name': name, 'description': description, 'date': date,};
+        let obj = {'id': id, 'name': name, 'description': description, 'date': date, 'tasks': tasks};
         return obj
     }
     const setProject = (storedObject) => {
@@ -21,9 +21,13 @@ const Project = (projectName, projectDescription) =>
         date = storedObject.date;
         name = storedObject.name;
         description = storedObject.description;
+        tasks = storedObject.tasks;
     }
 
-    return { getId, getName, getDescription, getDate, getProject, setProject }
+    let tasks = [];
+    const addTaskToProject = (task) => tasks.push(task);
+
+    return { getId, getName, getDescription, getDate, getProject, setProject, addTaskToProject }
 }
 
 export default Project;

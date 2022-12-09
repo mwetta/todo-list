@@ -11,31 +11,50 @@ const projectListController = (() => {
         } else { 
             let projectList = localStorage.getItem('projects');
             let currentProjects = JSON.parse(projectList);
-            let newCurrentProjects = new Array;
+            let newCurrentProjects = [];
             currentProjects.forEach(project => {
                 let newProject = Project(project.name, project.description);
                 newProject.setProject(project);
                 newCurrentProjects.push(newProject);
             });
-            console.log(newCurrentProjects);
-            return currentProjects 
+            return newCurrentProjects
         }
     }    
 
     const addProject = (newProject) => {
         let currentProjects = projects();
-        currentProjects.push(newProject.getProject());
-        console.log(newProject);
-        storageCoordinator.store('projects', JSON.stringify(currentProjects));
+        currentProjects.push(newProject);
+        let newCurrentProjects = updateProjectList(currentProjects);
+        storageCoordinator.store('projects', JSON.stringify(newCurrentProjects)); 
+    }
+
+    const addToDo = (newToDo) => {
+        let currentProjects = projects();
+        let toDoProject = newToDo.getProject();
+        let task = newToDo.getToDo();
+        let index = currentProjects.findIndex(project=>project.getId() === toDoProject);
+        let currentProject = currentProjects[index];
+        currentProject.addTaskToProject(task);
+        let newCurrentProjects = updateProjectList(currentProjects);
+        storageCoordinator.store('projects', JSON.stringify(newCurrentProjects)); 
     }
 
     const removeProject = (currentProject) => {
         
     }
 
+    const updateProjectList = (currentProjects) => {
+        let newCurrentProjects = [];
+        currentProjects.forEach(project => {
+            let newProject = project.getProject();
+            newCurrentProjects.push(newProject);
+        });
+        return newCurrentProjects
+    }
+
     const getProjectList = () => projects();
 
-    return {addProject, removeProject, getProjectList}
+    return {addProject, removeProject, getProjectList, addToDo}
 })();
 
 export default projectListController;

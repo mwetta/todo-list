@@ -9,11 +9,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
     uiController.writeMenu("content");
 })
 
-projectController.create('eportfolio', 'all the tasks for eportfolio');
-
 const createDefaultProject = () => {
     let currentProjects = projectListController.getProjectList();
-    let checkForDefault = currentProjects.find(currentProject => currentProject.name === 'default');
+    let checkForDefault = currentProjects.find(currentProject => currentProject.getName() === 'default');
     if (checkForDefault === undefined) {
         projectController.create('default', 'default project for unassigned tasks')
     }

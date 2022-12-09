@@ -1,9 +1,10 @@
+import projectListController from './projectListController.js';
 import toDo from './toDo.js'
 
 const toDoController = (() => {
-    const create = (title, dueDate, description, priority, notes) => {
-        let newToDo = toDo(title, dueDate, description, priority, notes);
-        return newToDo
+    const create = (name, dueDate, description, priority, notes, project) => {
+        let newToDo = toDo(name, dueDate, description, priority, notes, project);
+        projectListController.addToDo(newToDo)
     }
 
     const edit = (toDoId) => {
