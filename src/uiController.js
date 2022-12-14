@@ -6,10 +6,21 @@ const uiController = (() => {
 
     const writeMenu = (elm) => {
         let content = window.document.getElementById(elm);
-        console.log(content);
         let menu = document.createElement('div');
         menu.setAttribute('id', 'menu');
         content.appendChild(menu);
+    }
+
+    const rewriteContent = () => {
+        // will take id of object clicked and write full page
+    }
+
+    const writeProjects = () => {
+
+    }
+
+    const writeProject = () => {
+
     }
 
 return {writeMenu}

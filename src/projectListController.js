@@ -11,15 +11,17 @@ const projectListController = (() => {
         } else { 
             let projectList = localStorage.getItem('projects');
             let currentProjects = JSON.parse(projectList);
-            let newCurrentProjects = [];
+            let currentProjectsObjects = [];
+            // pulls projects from parsed array and iterates through to return new project objects
             currentProjects.forEach(project => {
                 let newProject = Project(project.name, project.description);
                 newProject.setProject(project);
-                newCurrentProjects.push(newProject);
+                currentProjectsObjects.push(newProject);
             });
-            return newCurrentProjects
+            return currentProjectsObjects
         }
     }    
+
 
     const addProject = (newProject) => {
         let currentProjects = projects();
@@ -31,10 +33,10 @@ const projectListController = (() => {
     const addToDo = (newToDo) => {
         let currentProjects = projects();
         let toDoProject = newToDo.getProject();
-        let task = newToDo.getToDo();
+        let toDo = newToDo.getToDo();
         let index = currentProjects.findIndex(project=>project.getId() === toDoProject);
         let currentProject = currentProjects[index];
-        currentProject.addTaskToProject(task);
+        currentProject.addToDoToProject(toDo);
         let newCurrentProjects = updateProjectList(currentProjects);
         storageCoordinator.store('projects', JSON.stringify(newCurrentProjects)); 
     }
@@ -43,6 +45,7 @@ const projectListController = (() => {
         
     }
 
+    //returns string version of all objects in project list to send to storage
     const updateProjectList = (currentProjects) => {
         let newCurrentProjects = [];
         currentProjects.forEach(project => {

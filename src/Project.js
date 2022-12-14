@@ -12,22 +12,24 @@ const Project = (projectName, projectDescription) =>
     const getName = () => name;
     const getDescription = () => description;
     const getDate = () => date;
+    //method used to store project
     const getProject = () => {
-        let obj = {'id': id, 'name': name, 'description': description, 'date': date, 'tasks': tasks};
+        let obj = {'id': id, 'name': name, 'description': description, 'date': date, 'todos': todos};
         return obj
     }
+    // method used when retrieving project from storage
     const setProject = (storedObject) => {
         id = storedObject.id; 
         date = storedObject.date;
         name = storedObject.name;
         description = storedObject.description;
-        tasks = storedObject.tasks;
+        todos = storedObject.todos;
     }
 
-    let tasks = [];
-    const addTaskToProject = (task) => tasks.push(task);
+    let todos = [];
+    const addToDoToProject = (todo) => todos.push(todo);
 
-    return { getId, getName, getDescription, getDate, getProject, setProject, addTaskToProject }
+    return { getId, getName, getDescription, getDate, getProject, setProject, addToDoToProject }
 }
 
 export default Project;
