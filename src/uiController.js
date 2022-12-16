@@ -1,5 +1,6 @@
 import Project from './Project.js'
 import writeToProjectList from './projectListController.js'
+import projectController from './projectController'
 import projectListController from './projectListController.js'
 import { format } from 'date-fns'
 import clickHandler from './clickHandler.js'
@@ -48,7 +49,7 @@ const uiController = (() => {
         content.appendChild(main);
         writeDefault();
     }
-    
+
     const clearMain = (id) => {
         let main = document.getElementById('main');
             while (main.firstChild) {
@@ -103,10 +104,68 @@ const uiController = (() => {
     }
 
     const writeAddForm = () => {
-        console.log('here is where add gets triggered');
+        let main = document.getElementById('main');
+
+        let projectBtn = document.createElement('button');
+        projectBtn.setAttribute('id', 'project-button');
+        projectBtn.textContent = 'add project';
+        projectBtn.addEventListener('click', () => {
+                clearMain(projectBtn.id);
+            })
+            
+        let toDoBtn = document.createElement('button');
+        toDoBtn.textContent = 'add to do';
+        toDoBtn.setAttribute('id', 'todo-button');
+        toDoBtn.addEventListener('click', () => {
+            clearMain(toDoBtn.id);
+        })
+
+        main.appendChild(projectBtn);
+        main.appendChild(toDoBtn);
     }
 
-return {writeMenu, writeDefault, writeAddForm}
+    const writeProjectForm = () => {
+        let main = document.getElementById('main');
+        let projectForm = document.createElement('form');
+
+        let newProjectNameLabel = document.createElement('label');
+        newProjectNameLabel.setAttribute('for', 'project-name');
+        newProjectNameLabel.textContent = 'Project Name';
+        let newProjectName = document.createElement('input');
+        newProjectName.setAttribute('type', 'text');
+        newProjectName.setAttribute('id', 'project-name');
+        projectForm.appendChild(newProjectNameLabel);
+        projectForm.appendChild(newProjectName);
+        
+        let newProjectDescriptionLabel = document.createElement('label');
+        newProjectDescriptionLabel.setAttribute('for', 'project-description');
+        newProjectDescriptionLabel.textContent = 'Project Description';
+        let newProjectDescription = document.createElement('input');
+        newProjectDescription.setAttribute('type', 'text');
+        newProjectDescription.setAttribute('id', 'project-description');
+        projectForm.appendChild(newProjectDescriptionLabel);
+        projectForm.appendChild(newProjectDescription);
+
+        let projectFormButton = document.createElement('button');
+        projectFormButton.setAttribute('id', 'new-project-button');
+        projectFormButton.textContent = 'Add project';
+        projectFormButton.addEventListener('click', () => {
+            projectController.create(newProjectName.value, newProjectDescription.value);
+            clearMain(projectFormButton.id);
+        })
+        projectForm.appendChild(projectFormButton);
+
+
+        main.appendChild(projectForm);
+    }
+
+    const writeToDoForm = () => {
+        console.log('trigger to do form')
+    }
+
+return {writeMenu, writeDefault, writeAddForm, writeProjectForm, writeToDoForm}
 })();
 
 export default uiController;
+
+// consider document query selector all buttons, add event listener click that clear's main and call's click handler
