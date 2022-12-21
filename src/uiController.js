@@ -163,15 +163,23 @@ const uiController = (() => {
         let main = document.getElementById('main');
         let toDoForm = document.createElement('form');
 
-        // name
         let newToDoNameLabel = document.createElement('label');
         newToDoNameLabel.setAttribute('for', 'to-do-name');
-        newToDoNameLabel.textContent = 'Name';
+        newToDoNameLabel.textContent = 'ToDo Name';
         let newToDoName = document.createElement('input');
         newToDoName.setAttribute('type', 'text');
         newToDoName.setAttribute('id', 'to-do-name');
         toDoForm.appendChild(newToDoNameLabel);
         toDoForm.appendChild(newToDoName);
+        
+        let newToDoDescriptionLabel = document.createElement('label');
+        newToDoDescriptionLabel.setAttribute('for', 'to-do-description');
+        newToDoDescriptionLabel.textContent = 'ToDo Description';
+        let newToDoDescription = document.createElement('input');
+        newToDoDescription.setAttribute('type', 'text');
+        newToDoDescription.setAttribute('id', 'to-do-description');
+        toDoForm.appendChild(newToDoDescriptionLabel);
+        toDoForm.appendChild(newToDoDescription);
 
         // due date
         let dueDateLabel = document.createElement('label');
@@ -182,16 +190,6 @@ const uiController = (() => {
         dueDate.setAttribute('id', 'due-date');
         toDoForm.appendChild(dueDateLabel);
         toDoForm.appendChild(dueDate);
-
-        // description
-        let newToDoDescriptionLabel = document.createElement('label');
-        newToDoDescriptionLabel.setAttribute('for', 'to-do-description');
-        newToDoDescriptionLabel.textContent = 'Description';
-        let newToDoDescription = document.createElement('input');
-        newToDoDescription.setAttribute('type', 'text');
-        newToDoDescription.setAttribute('id', 'to-do-description');
-        toDoForm.appendChild(newToDoDescriptionLabel);
-        toDoForm.appendChild(newToDoDescription);
 
         //priority 
         let priorityLabel = document.createElement('label');
@@ -211,7 +209,6 @@ const uiController = (() => {
         priority.appendChild(defaultOption);
         priority.appendChild(highOption);
         priority.appendChild(lowOption);
-        
         toDoForm.appendChild(priorityLabel);
         toDoForm.appendChild(priority);
 
@@ -221,46 +218,41 @@ const uiController = (() => {
         notesLabel.textContent = 'Notes';
         let notes = document.createElement('textarea');
         notes.setAttribute('id', 'to-do-notes');
-        
         toDoForm.appendChild(notesLabel);
         toDoForm.appendChild(notes);
-
-
 
         //project
         let projectLabel = document.createElement('label');
         projectLabel.setAttribute('for', 'project-choice');
         projectLabel.textContent = 'Project';
-        let projectChoice = document.createElement('input');
-        projectChoice.setAttribute('id', 'to-do-project'); 
-        projectChoice.setAttribute('list', 'project-choice-datalist');
-        let projectChoiceDatalist = document.createElement('datalist');
-        projectChoiceDatalist.setAttribute('id', 'project-choice-datalist');
-        projectChoice.appendChild(projectChoiceDatalist);
+        let projectChoice = document.createElement('select');
+        projectChoice.setAttribute('id', 'project-choice'); 
+        projectChoice.setAttribute('name', 'project-choice');
             //project data
                 let projectList = projectListController.getProjectList();
                 projectList.forEach(project=> {
                     let option = document.createElement('option');
-                    option.setAttribute('value', `${project.getName()}`);
-                    option.setAttribute('id', `${project.getId()}`);
-                    projectChoiceDatalist.appendChild(option);
-                    })
-
+                    let value = project.getName();
+                    let id = project.getId();
+                    option.textContent = `${value}`;
+                    option.setAttribute('value', `${id}`);
+                    option.setAttribute('id', `${id}`);
+                    projectChoice.appendChild(option);
+                    });
         toDoForm.appendChild(projectLabel);
         toDoForm.appendChild(projectChoice);
 
 
-        // add todo button
         let toDoFormButton = document.createElement('button');
         toDoFormButton.setAttribute('id', 'new-to-do-button');
-        toDoFormButton.textContent = 'Add to do';
+        toDoFormButton.textContent = 'Add ToDo';
         toDoFormButton.addEventListener('click', () => {
-            console.log('hey, you clikced me');
-            console.log(`${newToDoName.value}, ${dueDate.value}, ${newToDoDescription.value}, ${priority.value}, ${notes.value}, ${project.id}`);
-            toDoController.create(newToDoName.value, dueDate.value, newToDoDescription.value, priority.value, notes.value, project.id);
-        });
-        
+
+            toDoController.create(newToDoName.value, dueDate.value, newToDoDescription.value, priority.value,  notes.value, projectChoice.value);
+            clearMain(toDoFormButton.id);
+        })
         toDoForm.appendChild(toDoFormButton);
+
         main.appendChild(toDoForm);
     }
 
