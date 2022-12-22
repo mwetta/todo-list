@@ -8,7 +8,7 @@ const clickHandler = (() => {
             
         } else if (id == 'projects' || id == 'new-project-button') {
             uiController.writeDefault();
-        } else if (id == 'to-dos' || id == 'new-to-do-button') {
+        } else if (id == 'tasks' || id == 'new-to-do-button') {
             console.log('trigger todos');
             uiController.writeDefault();
         } else if (id == 'add') {
@@ -18,8 +18,12 @@ const clickHandler = (() => {
         } else if (id == 'todo-button') {
             uiController.writeToDoForm();
         } else {
-            console.log('trigger error');
+            projectHandler(id);
         }
+    }
+
+    const projectHandler = (id) => {
+        uiController.writeProjectPage(id);
     }
 
     return {rewriteContent}

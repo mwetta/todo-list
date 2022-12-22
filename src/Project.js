@@ -29,7 +29,9 @@ const Project = (projectName, projectDescription) =>
     let todos = [];
     const addToDoToProject = (todo) => todos.push(todo);
 
-    return { getId, getName, getDescription, getDate, getProject, setProject, addToDoToProject }
+    let getTodos = () => todos;
+
+    return { getId, getName, getDescription, getDate, getProject, setProject, addToDoToProject, getTodos}
 }
 
 export default Project;

@@ -70,6 +70,10 @@ const uiController = (() => {
             projectDiv.setAttribute('id', `${id}`);
             projectDiv.classList.add('project');
             main.appendChild(projectDiv);
+            
+            projectDiv.addEventListener('click', ()=>{
+                clearMain(id);
+            })
 
             let name = project.getName();
             let description = project.getDescription();
@@ -100,7 +104,41 @@ const uiController = (() => {
 
     }
 
-    const writeProjectPage = () => {
+    const writeProjectPage = (id) => {
+        let main = document.getElementById('main');
+        console.log('write project page');
+        let projects = projectListController.getProjectList();
+        let index = projects.findIndex(project => project.getId() === id);
+        let displayProject = projects[index];
+        console.log(displayProject);
+
+        let name = document.createElement('p');
+        name.textContent = `${displayProject.getName()}`;
+        main.appendChild(name);
+
+        let date = document.createElement('p');
+        let formattedDate = format(displayProject.getDate(), 'MM/dd/yyy');
+        date.textContent = `${formattedDate}`;
+        main.appendChild(date);
+
+        let description = document.createElement('p');
+        description.textContent = `${displayProject.getDescription()}`;
+        main.appendChild(description);
+
+        let tasks = document.createElement('ul');
+        let toDos = displayProject.getTodos();
+        toDos.forEach((toDo) => {
+            console.log(toDo);
+            let listItem = document.createElement('li');
+            let link = document.createElement('p');
+            link.textContent = toDo.name;
+            link.setAttribute('id', toDo.id);
+            // add event listener to task page
+            listItem.appendChild(link);
+            tasks.appendChild(listItem);
+        })
+        main.appendChild(tasks);
+
 
     }
 
@@ -256,7 +294,7 @@ const uiController = (() => {
         main.appendChild(toDoForm);
     }
 
-return {writeMenu, writeDefault, writeAddForm, writeProjectForm, writeToDoForm}
+return {writeMenu, writeDefault, writeAddForm, writeProjectForm, writeToDoForm, writeProjectPage}
 })();
 
 export default uiController;
