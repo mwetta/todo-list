@@ -72,9 +72,7 @@ const uiController = (() => {
             projectDiv.classList.add('project');
             main.appendChild(projectDiv);
             
-            projectDiv.addEventListener('click', ()=>{
-                clickHandler.projectHandler(id);
-            })
+
 
             let name = project.getName();
             let description = project.getDescription();
@@ -98,6 +96,15 @@ const uiController = (() => {
             detailsDiv.appendChild(dateP);
             detailsDiv.classList.add('details');
             projectDiv.appendChild(detailsDiv);
+
+            let toggleVisibile = document.createElement('div');
+            let visibilityP = document.createElement('p');
+            visibilityP.textContent = 'show/hide tasks';
+            toggleVisibile.addEventListener('click', ()=>{
+                clickHandler.projectHandler(id);
+            })
+            toggleVisibile.appendChild(visibilityP);
+            projectDiv.appendChild(toggleVisibile);
 
             let tasksDiv = document.createElement('div');
             tasksDiv.setAttribute('id', `tasks-${id}`);
@@ -124,39 +131,13 @@ const uiController = (() => {
 
     const writeProjectPage = (id) => {
         let projectTasksDiv = document.getElementById(`tasks-${id}`);
-        projectTasksDiv.classList.remove('hide');
-        projectTasksDiv.classList.add('show')
-        
-
-        // let projects = projectListController.getProjectList();
-        // let index = projects.findIndex(project => project.getId() === id);
-        // let displayProject = projects[index];
-        // let taskHeader = document.createElement('h2');
-        // taskHeader.textContent = 'Project Tasks';
-        // projectTasksDiv.appendChild(taskHeader);
-
-
-        // projectDiv.appendChild(tasks);
-
-        // let main = document.getElementById('main');
-
-        // console.log(displayProject);
-
-        // let name = document.createElement('p');
-        // name.textContent = `${displayProject.getName()}`;
-        // main.appendChild(name);
-
-        // let date = document.createElement('p');
-        // let formattedDate = format(displayProject.getDate(), 'MM/dd/yyy');
-        // date.textContent = `${formattedDate}`;
-        // main.appendChild(date);
-
-        // let description = document.createElement('p');
-        // description.textContent = `${displayProject.getDescription()}`;
-        // main.appendChild(description);
-
-
-        // main.appendChild(tasks);
+        if (projectTasksDiv.classList.contains('hide')) {
+            projectTasksDiv.classList.remove('hide');
+            projectTasksDiv.classList.add('show');
+        } else if (projectTasksDiv.classList.contains('show')) {
+            projectTasksDiv.classList.remove('show');
+            projectTasksDiv.classList.add('hide');
+        }
     }
 
     const writeAddForm = () => {
