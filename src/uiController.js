@@ -73,7 +73,7 @@ const uiController = (() => {
             main.appendChild(projectDiv);
             
             projectDiv.addEventListener('click', ()=>{
-                clearMain(id);
+                clickHandler.projectHandler(id);
             })
 
             let name = project.getName();
@@ -98,42 +98,65 @@ const uiController = (() => {
             detailsDiv.appendChild(dateP);
             detailsDiv.classList.add('details');
             projectDiv.appendChild(detailsDiv);
+
+            let tasksDiv = document.createElement('div');
+            tasksDiv.setAttribute('id', `tasks-${id}`);
+            let tasksP = document.createElement('p');
+            tasksP.textContent = 'Project Tasks';
+            tasksDiv.classList.add('hide');
+            tasksDiv.appendChild(tasksP);
+            nameDiv.appendChild(tasksDiv);
+
+            let tasks = document.createElement('ul');
+            let toDos = project.getTodos();
+            toDos.forEach((toDo) => {
+                    let listItem = document.createElement('li');
+                    let link = document.createElement('p');
+                    link.textContent = toDo.name;
+                    link.setAttribute('id', toDo.id);
+                    // add event listener to task page
+                    listItem.appendChild(link);
+                    tasks.appendChild(listItem);
+                })
+            tasksDiv.appendChild(tasks);
             })
     }
 
     const writeProjectPage = (id) => {
-        let main = document.getElementById('main');
-        let projects = projectListController.getProjectList();
-        let index = projects.findIndex(project => project.getId() === id);
-        let displayProject = projects[index];
-        console.log(displayProject);
+        let projectTasksDiv = document.getElementById(`tasks-${id}`);
+        projectTasksDiv.classList.remove('hide');
+        projectTasksDiv.classList.add('show')
+        
 
-        let name = document.createElement('p');
-        name.textContent = `${displayProject.getName()}`;
-        main.appendChild(name);
+        // let projects = projectListController.getProjectList();
+        // let index = projects.findIndex(project => project.getId() === id);
+        // let displayProject = projects[index];
+        // let taskHeader = document.createElement('h2');
+        // taskHeader.textContent = 'Project Tasks';
+        // projectTasksDiv.appendChild(taskHeader);
 
-        let date = document.createElement('p');
-        let formattedDate = format(displayProject.getDate(), 'MM/dd/yyy');
-        date.textContent = `${formattedDate}`;
-        main.appendChild(date);
 
-        let description = document.createElement('p');
-        description.textContent = `${displayProject.getDescription()}`;
-        main.appendChild(description);
+        // projectDiv.appendChild(tasks);
 
-        let tasks = document.createElement('ul');
-        let toDos = displayProject.getTodos();
-        toDos.forEach((toDo) => {
-            console.log(toDo);
-            let listItem = document.createElement('li');
-            let link = document.createElement('p');
-            link.textContent = toDo.name;
-            link.setAttribute('id', toDo.id);
-            // add event listener to task page
-            listItem.appendChild(link);
-            tasks.appendChild(listItem);
-        })
-        main.appendChild(tasks);
+        // let main = document.getElementById('main');
+
+        // console.log(displayProject);
+
+        // let name = document.createElement('p');
+        // name.textContent = `${displayProject.getName()}`;
+        // main.appendChild(name);
+
+        // let date = document.createElement('p');
+        // let formattedDate = format(displayProject.getDate(), 'MM/dd/yyy');
+        // date.textContent = `${formattedDate}`;
+        // main.appendChild(date);
+
+        // let description = document.createElement('p');
+        // description.textContent = `${displayProject.getDescription()}`;
+        // main.appendChild(description);
+
+
+        // main.appendChild(tasks);
     }
 
     const writeAddForm = () => {

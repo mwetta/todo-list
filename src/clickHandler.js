@@ -18,7 +18,7 @@ const clickHandler = (() => {
         } else if (id == 'todo-button') {
             uiController.writeToDoForm();
         } else {
-            projectHandler(id);
+            console.log('trigger error');
         }
     }
 
@@ -26,7 +26,7 @@ const clickHandler = (() => {
         uiController.writeProjectPage(id);
     }
 
-    return {rewriteContent}
+    return {rewriteContent, projectHandler}
 })();
 
 export default clickHandler;
