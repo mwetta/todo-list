@@ -10,6 +10,7 @@ const uiController = (() => {
     // let content = window.document.getElementById(elm);
 
 
+
     const writeMenu = (elm) => {
         let content = window.document.getElementById(elm);
         let menu = document.createElement('div');
@@ -100,13 +101,8 @@ const uiController = (() => {
             })
     }
 
-    const writeProjectsPage = () => {
-
-    }
-
     const writeProjectPage = (id) => {
         let main = document.getElementById('main');
-        console.log('write project page');
         let projects = projectListController.getProjectList();
         let index = projects.findIndex(project => project.getId() === id);
         let displayProject = projects[index];
@@ -138,8 +134,6 @@ const uiController = (() => {
             tasks.appendChild(listItem);
         })
         main.appendChild(tasks);
-
-
     }
 
     const writeAddForm = () => {
