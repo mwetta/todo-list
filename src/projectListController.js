@@ -30,6 +30,19 @@ const projectListController = (() => {
         storageCoordinator.store('projects', JSON.stringify(newCurrentProjects)); 
     }
 
+    const editProject = (projectId, newName, newDescription) => {
+        let currentProjects = projects();
+        let index = currentProjects.findIndex(project=>project.getId() === projectId);
+        let oldProject = currentProjects[index].getProject();
+        currentProjects.splice(index, 1);
+        let newProject = Project(newName, newDescription);
+        newProject.updateProject(oldProject);
+        currentProjects.push(newProject);
+        let updatedProjects = updateProjectList(currentProjects);
+        storageCoordinator.store('projects', JSON.stringify(updatedProjects));
+
+    }
+
     const addToDo = (newToDo) => {
         let currentProjects = projects();
         let toDoProject = newToDo.getProject();
@@ -57,7 +70,7 @@ const projectListController = (() => {
 
     const getProjectList = () => projects();
 
-    return {addProject, removeProject, getProjectList, addToDo}
+    return {addProject, removeProject, getProjectList, addToDo, editProject}
 })();
 
 export default projectListController;

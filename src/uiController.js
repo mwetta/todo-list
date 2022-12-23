@@ -7,9 +7,6 @@ import clickHandler from './clickHandler.js'
 import toDoController from './toDoController.js'
 
 const uiController = (() => {
-    // let content = window.document.getElementById(elm);
-
-
 
     const writeMenu = (elm) => {
         let content = window.document.getElementById(elm);
@@ -31,6 +28,7 @@ const uiController = (() => {
                 menuItem.classList.remove('inactive');
                 menuItem.classList.add('active');
                 clearMain(menuItem.id);
+                clickHandler.rewriteContent(menuItem.id);   
             })
             let menuP = document.createElement('p');
             menuP.textContent = `${id}`;
@@ -58,7 +56,7 @@ const uiController = (() => {
                 console.log('will remove main');
                 main.removeChild(main.firstChild);
             }
-        clickHandler.rewriteContent(id);   
+        // clickHandler.rewriteContent(id);   
     }
 
     //currently set at default to show projects; ideal is to show upcoming tasks
@@ -77,7 +75,6 @@ const uiController = (() => {
             let name = project.getName();
             let description = project.getDescription();
             let date = format(project.getDate(), 'MM/dd/yyy');
-            console.log(date);
             
 
             let nameDiv = document.createElement('div');
@@ -105,6 +102,17 @@ const uiController = (() => {
             })
             toggleVisibile.appendChild(visibilityP);
             projectDiv.appendChild(toggleVisibile);
+
+            let editProject = document.createElement('div');
+            editProject.setAttribute('id', `edit-${id}`);
+            let editProjectP = document.createElement('p');
+            editProjectP.textContent = 'Edit Project';
+            editProject.addEventListener('click', () => {
+                clearMain(id);
+                editProjectForm(id);
+            })
+            editProject.appendChild(editProjectP);
+            projectDiv.appendChild(editProject);
 
             let tasksDiv = document.createElement('div');
             tasksDiv.setAttribute('id', `tasks-${id}`);
@@ -148,6 +156,7 @@ const uiController = (() => {
         projectBtn.textContent = 'add project';
         projectBtn.addEventListener('click', () => {
                 clearMain(projectBtn.id);
+                clickHandler.rewriteContent(projcetBtn.id);   
             })
             
         let toDoBtn = document.createElement('button');
@@ -155,6 +164,7 @@ const uiController = (() => {
         toDoBtn.setAttribute('id', 'todo-button');
         toDoBtn.addEventListener('click', () => {
             clearMain(toDoBtn.id);
+            clickHandler.rewriteContent(toDoBtn.id);   
         })
 
         main.appendChild(projectBtn);
@@ -189,6 +199,7 @@ const uiController = (() => {
         projectFormButton.addEventListener('click', () => {
             projectController.create(newProjectName.value, newProjectDescription.value);
             clearMain(projectFormButton.id);
+            clickHandler.rewriteContent(projectFormButton.id);   
         })
         projectForm.appendChild(projectFormButton);
 
@@ -286,10 +297,58 @@ const uiController = (() => {
 
             toDoController.create(newToDoName.value, dueDate.value, newToDoDescription.value, priority.value,  notes.value, projectChoice.value);
             clearMain(toDoFormButton.id);
+            clickHandler.rewriteContent(toDoFormButton.id);   
         })
         toDoForm.appendChild(toDoFormButton);
 
         main.appendChild(toDoForm);
+    }
+
+    const editProjectForm = (projectId) => {
+        let main = document.getElementById('main');
+        let projectForm = document.createElement('form');
+
+        let projectList = projectListController.getProjectList();
+        let index = projectList.findIndex(project=>project.getId() === projectId);
+        console.log(index);
+
+        let name = projectList[index].getName();
+        let description = projectList[index].getDescription();
+
+        let header = document.createElement('p');
+        header.textContent = `Editing ${name}`;
+
+        let newProjectNameLabel = document.createElement('label');
+        newProjectNameLabel.setAttribute('for', 'project-name');
+        newProjectNameLabel.textContent = 'Project Name';
+        let newProjectName = document.createElement('input');
+        newProjectName.setAttribute('type', 'text');
+        newProjectName.setAttribute('id', 'project-name');
+        newProjectName.setAttribute('value', name);
+        projectForm.appendChild(newProjectNameLabel);
+        projectForm.appendChild(newProjectName);
+        
+        let newProjectDescriptionLabel = document.createElement('label');
+        newProjectDescriptionLabel.setAttribute('for', 'project-description');
+        newProjectDescriptionLabel.textContent = 'Project Description';
+        let newProjectDescription = document.createElement('input');
+        newProjectDescription.setAttribute('type', 'text');
+        newProjectDescription.setAttribute('id', 'project-description');
+        newProjectDescription.setAttribute('value', description);
+        projectForm.appendChild(newProjectDescriptionLabel);
+        projectForm.appendChild(newProjectDescription);
+
+        let projectFormButton = document.createElement('button');
+        projectFormButton.setAttribute('id', 'edit-project-button');
+        projectFormButton.textContent = 'Edit project';
+        projectFormButton.addEventListener('click', () => {
+            console.log('edit Project should trigger' );
+            clearMain();
+            projectListController.editProject(projectId, newProjectName.value, newProjectDescription.value);
+        })
+        projectForm.appendChild(projectFormButton);
+
+        main.appendChild(projectForm);
     }
 
 return {writeMenu, writeDefault, writeAddForm, writeProjectForm, writeToDoForm, writeProjectPage}

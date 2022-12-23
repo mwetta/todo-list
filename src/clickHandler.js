@@ -17,7 +17,11 @@ const clickHandler = (() => {
             uiController.writeProjectForm();
         } else if (id == 'todo-button') {
             uiController.writeToDoForm();
-        } else {
+        // } else if (id.includes('edit') === true) {
+        //     let projectId = id.slice(4);
+        //     console.log(projectId);
+        }
+        else {
             console.log('trigger error');
         }
     }
@@ -25,6 +29,8 @@ const clickHandler = (() => {
     const projectHandler = (id) => {
         uiController.writeProjectPage(id);
     }
+
+
 
     return {rewriteContent, projectHandler}
 })();

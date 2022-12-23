@@ -7,6 +7,7 @@ const Project = (projectName, projectDescription) =>
     let date = Date.now();
     let name = projectName;
     let description = projectDescription;
+    let createdDate; // have not done anything with this
     
     const getId = () => id;
     const getName = () => name;
@@ -26,12 +27,18 @@ const Project = (projectName, projectDescription) =>
         todos = storedObject.todos;
     }
 
+    const updateProject = (storedObject) => {
+        id = storedObject.id;
+        createdDate = storedObject.date;
+        todos = storedObject.todos;
+    }
+
     let todos = [];
     const addToDoToProject = (todo) => todos.push(todo);
 
     let getTodos = () => todos;
 
-    return { getId, getName, getDescription, getDate, getProject, setProject, addToDoToProject, getTodos}
+    return { getId, getName, getDescription, getDate, getProject, setProject, addToDoToProject, getTodos, updateProject}
 }
 
 export default Project;
