@@ -4,17 +4,17 @@ import toDo from './toDo.js'
 const toDoListController = (() => {
 
     const toDos = () => {
-        if (!localStorage.getItem('toDos')) 
+        if (!localStorage.getItem('todos')) 
         {   let toDoList = new Array;
             return toDoList
         } else { 
-            let toDoList = localStorage.getItem('toDos');
+            let toDoList = localStorage.getItem('todos');
             let currentToDos = JSON.parse(toDoList);
             let currentToDosObjects = [];
             // pulls projects from parsed array and iterates through to return new project objects
             currentToDos.forEach(todo => {
-                let newTodo = Project(todo.name, todo.description);
-                newTodo.setProject(todo);
+                let newTodo = toDo(todo.name, todo.description);
+                newTodo.setToDo(todo);
                 currentToDosObjects.push(newTodo);
             });
             return currentToDosObjects
@@ -37,7 +37,9 @@ const toDoListController = (() => {
         return newCurrentToDos
     }
 
-    return {addToDo}
+    const getToDoList = () => toDos();
+
+    return {addToDo, getToDoList}
 })();
 
 export default toDoListController;

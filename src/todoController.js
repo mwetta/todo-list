@@ -9,6 +9,16 @@ const toDoController = (() => {
         toDoListController.addToDo(newToDo);
     }
 
+    const retrieve = (toDoId) => {
+        let list = toDoListController.getToDoList();
+        console.log(list);
+        let index = list.findIndex(toDo=>toDo.getId() === toDoId);
+        console.log(index);
+        console.log(list[index]);
+        return list[index];
+
+    }
+
     const edit = (toDoId) => {
         // use toDoId to identify specific project
         // take new name and description
@@ -21,7 +31,7 @@ const toDoController = (() => {
     }
 
 
-    return {create, edit, remove}
+    return {create, edit, remove, retrieve}
 })();
 
 export default toDoController;
