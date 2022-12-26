@@ -69,14 +69,11 @@ const uiController = (() => {
             projectDiv.setAttribute('id', `${id}`);
             projectDiv.classList.add('project');
             main.appendChild(projectDiv);
-            
-
 
             let name = project.getName();
             let description = project.getDescription();
             let date = format(project.getDate(), 'MM/dd/yyy');
-            
-
+        
             let nameDiv = document.createElement('div');
             let nameP = document.createElement('h2');
             nameP.textContent = `${name}`;
@@ -103,24 +100,28 @@ const uiController = (() => {
             toggleVisibile.appendChild(visibilityP);
             projectDiv.appendChild(toggleVisibile);
 
-            let editProject = document.createElement('div');
-            editProject.setAttribute('id', `edit-${id}`);
-            let editProjectP = document.createElement('p');
-            editProjectP.textContent = 'Edit Project';
-            editProject.addEventListener('click', () => {
-                clearMain(id);
-                editProjectForm(id);
-            })
-            editProject.appendChild(editProjectP);
-            projectDiv.appendChild(editProject);
 
-            let tasksDiv = document.createElement('div');
-            tasksDiv.setAttribute('id', `tasks-${id}`);
-            let tasksP = document.createElement('p');
-            tasksP.textContent = 'Project Tasks';
-            tasksDiv.classList.add('hide');
-            tasksDiv.appendChild(tasksP);
-            nameDiv.appendChild(tasksDiv);
+            if (project.getName() != 'default'){
+                let editProject = document.createElement('div');
+                editProject.setAttribute('id', `edit-${id}`);
+                let editProjectP = document.createElement('p');
+                editProjectP.textContent = 'Edit Project';
+                editProject.addEventListener('click', () => {
+                    clearMain(id);
+                    editProjectForm(id);
+                })
+                editProject.appendChild(editProjectP);
+                projectDiv.appendChild(editProject);
+            }
+    
+                let tasksDiv = document.createElement('div');
+                tasksDiv.setAttribute('id', `tasks-${id}`);
+                let tasksP = document.createElement('p');
+                tasksP.textContent = 'Project Tasks';
+                tasksDiv.classList.add('hide');
+                tasksDiv.appendChild(tasksP);
+                nameDiv.appendChild(tasksDiv);
+            
 
             let tasks = document.createElement('ul');
             let toDos = project.getTodos();
@@ -308,12 +309,14 @@ const uiController = (() => {
         let main = document.getElementById('main');
         let projectForm = document.createElement('form');
 
-        let projectList = projectListController.getProjectList();
-        let index = projectList.findIndex(project=>project.getId() === projectId);
-        console.log(index);
+        // let projectList = projectListController.getProjectList();
+        // let index = projectList.findIndex(project=>project.getId() === projectId);
+        // console.log(index);
 
-        let name = projectList[index].getName();
-        let description = projectList[index].getDescription();
+        let project = projectController.retrieve(projectId);
+
+        let name = project.getName();
+        let description = project.getDescription();
 
         let header = document.createElement('p');
         header.textContent = `Editing ${name}`;
@@ -342,14 +345,14 @@ const uiController = (() => {
         projectFormButton.setAttribute('id', 'edit-project-button');
         projectFormButton.textContent = 'Edit project';
         projectFormButton.addEventListener('click', () => {
-            console.log('edit Project should trigger' );
             clearMain();
-            projectListController.editProject(projectId, newProjectName.value, newProjectDescription.value);
+            projectController.edit(projectId, newProjectName.value, newProjectDescription.value);
         })
         projectForm.appendChild(projectFormButton);
 
         main.appendChild(projectForm);
     }
+
 
 return {writeMenu, writeDefault, writeAddForm, writeProjectForm, writeToDoForm, writeProjectPage}
 })();

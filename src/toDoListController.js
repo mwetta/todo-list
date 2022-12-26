@@ -19,8 +19,8 @@ const toDoListController = (() => {
             });
             return currentToDosObjects
         }
-    }
 
+    }
     const addToDo = (newToDo) => {
         let currentToDos = toDos();
         currentToDos.push(newToDo);
