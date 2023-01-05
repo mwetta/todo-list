@@ -1,3 +1,4 @@
+import projectListController from './projectListController.js';
 import storageCoordinator from './storageCoordinator.js';
 import toDo from './toDo.js'
 
@@ -23,6 +24,7 @@ const toDoListController = (() => {
     }
     const addToDo = (newToDo) => {
         let currentToDos = toDos();
+        console.log(newToDo.getProject());
         currentToDos.push(newToDo);
         let newCurrentToDos = updateToDoList(currentToDos);
         storageCoordinator.store('todos', JSON.stringify(newCurrentToDos));
@@ -37,9 +39,20 @@ const toDoListController = (() => {
         return newCurrentToDos
     }
 
+    const editToDo = (toDoId, newToDo) => {
+        let currentToDos = toDos();
+        let index = currentToDos.findIndex(toDo=>toDo.getId() === toDoId);
+        currentToDos.splice(index, 1);
+        currentToDos.push(newToDo);
+        let updatedToDos = updateToDoList(currentToDos);
+        storageCoordinator.store('todos', JSON.stringify(updatedToDos));
+        projectListController.editToDo(newToDo);
+        //known issue = if reassigning to another project, does not "reassign", simply saves updated task to newly assigned project
+    }
+
     const getToDoList = () => toDos();
 
-    return {addToDo, getToDoList}
+    return {addToDo, getToDoList, editToDo}
 })();
 
 export default toDoListController;

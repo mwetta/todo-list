@@ -35,10 +35,14 @@ const Project = (projectName, projectDescription) =>
 
     let todos = [];
     const addToDoToProject = (todo) => todos.push(todo);
+    const removeToDoFromProject = (oldToDo) => {
+        let index = todos.findIndex(todo=>todo.id === oldToDo.id);
+        todos.splice(index, 1);
+    }
 
     let getTodos = () => todos;
 
-    return { getId, getName, getDescription, getDate, getProject, setProject, addToDoToProject, getTodos, updateProject}
+    return { getId, getName, getDescription, getDate, getProject, setProject, addToDoToProject, getTodos, updateProject, removeToDoFromProject}
 }
 
 export default Project;

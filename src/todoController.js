@@ -4,25 +4,29 @@ import toDoListController from './toDoListController.js';
 
 const toDoController = (() => {
     const create = (name, dueDate, description, priority, notes, project) => {
+        console.log(project);
         let newToDo = toDo(name, dueDate, description, priority, notes, project);
+        console.log(newToDo.getProject());
         projectListController.addToDo(newToDo);
+        //seems to translate correctly here
         toDoListController.addToDo(newToDo);
     }
 
     const retrieve = (toDoId) => {
         let list = toDoListController.getToDoList();
-        console.log(list);
         let index = list.findIndex(toDo=>toDo.getId() === toDoId);
-        console.log(index);
-        console.log(list[index]);
         return list[index];
 
     }
 
-    const edit = (toDoId) => {
-        // use toDoId to identify specific project
-        // take new name and description
-        // hand off to storage, which in turn hands off to DOM controller
+    const edit = (toDoId, newName, newDueDate, newDescription, newPriority, newNotes, newProject) => {
+        let oldToDo = retrieve(toDoId).getToDo();
+        console.log(oldToDo);
+        let newToDo = toDo(newName, newDueDate, newDescription, newPriority, newNotes, newProject);
+        console.log(newToDo.getToDo());
+        newToDo.updateToDo(oldToDo);
+        console.log(newToDo.getToDo());
+        toDoListController.editToDo(toDoId, newToDo);
     }
 
     const remove = (toDoId) => {

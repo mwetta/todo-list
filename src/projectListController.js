@@ -37,7 +37,6 @@ const projectListController = (() => {
         currentProjects.push(newProject);
         let updatedProjects = updateProjectList(currentProjects);
         storageCoordinator.store('projects', JSON.stringify(updatedProjects));
-
     }
 
     const addToDo = (newToDo) => {
@@ -49,6 +48,14 @@ const projectListController = (() => {
         currentProject.addToDoToProject(toDo);
         let newCurrentProjects = updateProjectList(currentProjects);
         storageCoordinator.store('projects', JSON.stringify(newCurrentProjects)); 
+    }
+
+    const editToDo = (updatedToDo) => {
+        let toDo = updatedToDo.getToDo();
+        let currentProject = projectController.retrieve(toDo.project);
+        currentProject.removeToDoFromProject(toDo);
+        currentProject.addToDoToProject(toDo);
+        editProject(currentProject.getId(), currentProject);
     }
 
     const removeProject = (currentProject) => {
@@ -67,7 +74,7 @@ const projectListController = (() => {
 
     const getProjectList = () => projects();
 
-    return {addProject, removeProject, getProjectList, addToDo, editProject}
+    return {addProject, removeProject, getProjectList, addToDo, editProject, editToDo}
 })();
 
 export default projectListController;

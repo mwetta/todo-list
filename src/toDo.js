@@ -11,13 +11,7 @@ const toDo = (name, dueDate, description, priority, notes, project) => {
     const getDescription = () => description;
     const getPriority = () => priority;
     const getNotes = () => notes;
-    const getProject = () => {
-        if (project === undefined) { return 'default'}
-        else {
-            return project // here need to get project.id
-        };
-    
-        }
+    const getProject = () => project;        
     const getToDo = () => { 
         let obj = {
             'id': id,
@@ -27,7 +21,7 @@ const toDo = (name, dueDate, description, priority, notes, project) => {
             'description': description,
             'priority': priority,
             'notes': notes,
-            'project': getProject() 
+            'project': project
         }
         return obj
     }
@@ -39,6 +33,12 @@ const toDo = (name, dueDate, description, priority, notes, project) => {
         description = storedObject.description;
         priority = storedObject.priority;
         notes = storedObject.notes;
+        project = storedObject.project;
+    }
+
+
+    const updateToDo = (storedObject) => {
+        id = storedObject.id;
     }
 
         return {
@@ -51,7 +51,8 @@ const toDo = (name, dueDate, description, priority, notes, project) => {
             getNotes,
             getProject,
             getToDo,
-            setToDo
+            setToDo,
+            updateToDo
         }
 }
 

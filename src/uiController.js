@@ -53,7 +53,6 @@ const uiController = (() => {
     const clearMain = (id) => {
         let main = document.getElementById('main');
             while (main.firstChild) {
-                console.log('will remove main');
                 main.removeChild(main.firstChild);
             }
         // clickHandler.rewriteContent(id);   
@@ -365,6 +364,8 @@ const uiController = (() => {
         let toDoForm = document.createElement('form');
 
         let toDo = toDoController.retrieve(id);
+        console.log(toDo.getToDo());
+        // they are being placed in the right location but still set to default
 
         let name = toDo.getName();
         let description = toDo.getDescription();
@@ -372,6 +373,9 @@ const uiController = (() => {
         let currentPriority = toDo.getPriority();
         let currentNotes = toDo.getNotes();
         let currentProject = toDo.getProject();
+        console.log(toDo.getProject());
+        console.log(toDo.getDescription());
+ 
 
         let header = document.createElement('p');
         header.textContent = `Editing ${name}`;
@@ -458,6 +462,10 @@ const uiController = (() => {
                     option.textContent = `${value}`;
                     option.setAttribute('value', `${id}`);
                     option.setAttribute('id', `${id}`);
+                    if (currentProject === id) {
+                        console.log(currentProject);
+                        option.setAttribute('selected', 'true');
+                    }
                     projectChoice.appendChild(option);
                     });
         toDoForm.appendChild(projectLabel);
@@ -466,13 +474,13 @@ const uiController = (() => {
 
         let toDoFormButton = document.createElement('button');
         toDoFormButton.setAttribute('id', 'new-to-do-button');
-        toDoFormButton.textContent = 'Add ToDo';
+        toDoFormButton.textContent = 'Save Edits';
         toDoFormButton.addEventListener('click', () => {
-
-            toDoController.create(newToDoName.value, dueDate.value, newToDoDescription.value, priority.value,  notes.value, projectChoice.value);
-            clearMain(toDoFormButton.id);
-            clickHandler.rewriteContent(toDoFormButton.id);   
+            console.log('you clicked the edit button')
+            clearMain();
+            toDoController.edit(id, newToDoName.value, dueDate.value, newToDoDescription.value, priority.value,  notes.value, projectChoice.value);
         })
+
         toDoForm.appendChild(toDoFormButton);
 
         main.appendChild(toDoForm);
@@ -482,5 +490,3 @@ return {writeMenu, writeDefault, writeAddForm, writeProjectForm, writeToDoForm, 
 })();
 
 export default uiController;
-
-// consider document query selector all buttons, add event listener click that clear's main and call's click handler
