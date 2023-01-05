@@ -354,7 +354,6 @@ const uiController = (() => {
             projectController.edit(projectId, newProjectName.value, newProjectDescription.value);
         })
         projectForm.appendChild(projectFormButton);
-
         main.appendChild(projectForm);
     }
 
@@ -373,8 +372,7 @@ const uiController = (() => {
         let currentPriority = toDo.getPriority();
         let currentNotes = toDo.getNotes();
         let currentProject = toDo.getProject();
-        console.log(toDo.getProject());
-        console.log(toDo.getDescription());
+        console.log(currentPriority);
  
 
         let header = document.createElement('p');
@@ -427,6 +425,14 @@ const uiController = (() => {
         highOption.textContent = 'High';
         lowOption.setAttribute('value', 'low');
         lowOption.textContent = 'Low';
+        if (currentPriority === 'high') {
+            highOption.setAttribute('selected', true);
+        } else if (currentPriority === 'low') {
+            lowOption.setAttribute('selected', true);
+        } else if (currentPriority === 'default') {
+            defaultOption.setAttribute('selected', true);
+        }
+
         priority.appendChild(defaultOption);
         priority.appendChild(highOption);
         priority.appendChild(lowOption);
@@ -439,7 +445,7 @@ const uiController = (() => {
         notesLabel.textContent = 'Notes';
         let notes = document.createElement('textarea');
         notes.setAttribute('id', 'to-do-notes');
-        notes.setAttribute('value', currentNotes);
+        notes.textContent = currentNotes;
         //notes value doesn't pull over 
         toDoForm.appendChild(notesLabel);
         toDoForm.appendChild(notes);
@@ -476,9 +482,9 @@ const uiController = (() => {
         toDoFormButton.setAttribute('id', 'new-to-do-button');
         toDoFormButton.textContent = 'Save Edits';
         toDoFormButton.addEventListener('click', () => {
-            console.log('you clicked the edit button')
             clearMain();
             toDoController.edit(id, newToDoName.value, dueDate.value, newToDoDescription.value, priority.value,  notes.value, projectChoice.value);
+            clickHandler.rewriteContent(toDoFormButton.id);
         })
 
         toDoForm.appendChild(toDoFormButton);
