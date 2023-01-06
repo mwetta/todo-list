@@ -1,5 +1,3 @@
-import Project from './Project.js'
-import writeToProjectList from './projectListController.js'
 import projectController from './projectController'
 import projectListController from './projectListController.js'
 import { format } from 'date-fns'
@@ -54,8 +52,7 @@ const uiController = (() => {
         let main = document.getElementById('main');
             while (main.firstChild) {
                 main.removeChild(main.firstChild);
-            }
-        // clickHandler.rewriteContent(id);   
+            } 
     }
 
     //currently set at default to show projects; ideal is to show upcoming tasks
@@ -329,10 +326,6 @@ const uiController = (() => {
         let main = document.getElementById('main');
         let projectForm = document.createElement('form');
 
-        // let projectList = projectListController.getProjectList();
-        // let index = projectList.findIndex(project=>project.getId() === projectId);
-        // console.log(index);
-
         let project = projectController.retrieve(projectId);
 
         let name = project.getName();
@@ -378,8 +371,7 @@ const uiController = (() => {
         let toDoForm = document.createElement('form');
 
         let toDo = toDoController.retrieve(id);
-        console.log(toDo.getToDo());
-        // they are being placed in the right location but still set to default
+
 
         let name = toDo.getName();
         let description = toDo.getDescription();
@@ -387,7 +379,6 @@ const uiController = (() => {
         let currentPriority = toDo.getPriority();
         let currentNotes = toDo.getNotes();
         let currentProject = toDo.getProject();
-        console.log(currentPriority);
  
 
         let header = document.createElement('p');
@@ -461,7 +452,6 @@ const uiController = (() => {
         let notes = document.createElement('textarea');
         notes.setAttribute('id', 'to-do-notes');
         notes.textContent = currentNotes;
-        //notes value doesn't pull over 
         toDoForm.appendChild(notesLabel);
         toDoForm.appendChild(notes);
 
@@ -473,7 +463,6 @@ const uiController = (() => {
         projectChoice.setAttribute('id', 'project-choice'); 
         projectChoice.setAttribute('name', 'project-choice');
         projectChoice.setAttribute('value', currentProject);
-        //need configure to correctly pull the currentProject name and populate
             //project data
                 let projectList = projectListController.getProjectList();
                 projectList.forEach(project=> {
@@ -484,7 +473,6 @@ const uiController = (() => {
                     option.setAttribute('value', `${id}`);
                     option.setAttribute('id', `${id}`);
                     if (currentProject === id) {
-                        console.log(currentProject);
                         option.setAttribute('selected', 'true');
                     }
                     projectChoice.appendChild(option);

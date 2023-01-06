@@ -12,7 +12,7 @@ const toDoListController = (() => {
             let toDoList = localStorage.getItem('todos');
             let currentToDos = JSON.parse(toDoList);
             let currentToDosObjects = [];
-            // pulls projects from parsed array and iterates through to return new project objects
+            // pulls todos from parsed array and iterates through to return new project objects
             currentToDos.forEach(todo => {
                 let newTodo = toDo(todo.name, todo.description);
                 newTodo.setToDo(todo);

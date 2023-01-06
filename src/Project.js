@@ -7,18 +7,18 @@ const Project = (projectName, projectDescription) =>
     let date = Date.now();
     let name = projectName;
     let description = projectDescription;
-    let createdDate; // have not done anything with this
     
     const getId = () => id;
     const getName = () => name;
     const getDescription = () => description;
     const getDate = () => date;
-    //method used to store project
+    //method used to translate into generic object which can be pushed to storage
     const getProject = () => {
         let obj = {'id': id, 'name': name, 'description': description, 'date': date, 'todos': todos};
         return obj
     }
-    // method used when retrieving project from storage
+
+    // method used when retrieving generic object from storage
     const setProject = (storedObject) => {
         id = storedObject.id; 
         date = storedObject.date;
@@ -29,7 +29,6 @@ const Project = (projectName, projectDescription) =>
 
     const updateProject = (storedObject) => {
         id = storedObject.id;
-        createdDate = storedObject.date;
         todos = storedObject.todos;
     }
 

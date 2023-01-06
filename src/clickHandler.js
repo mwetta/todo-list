@@ -9,7 +9,6 @@ const clickHandler = (() => {
         } else if (id == 'projects' || id == 'new-project-button') {
             uiController.writeDefault();
         } else if (id == 'tasks' || id == 'new-to-do-button' || id === 'remove-task') {
-            console.log('trigger todos');
             uiController.writeDefault();
         } else if (id == 'add') {
             uiController.writeAddForm();
@@ -17,11 +16,7 @@ const clickHandler = (() => {
             uiController.writeProjectForm();
         } else if (id == 'todo-button') {
             uiController.writeToDoForm();
-        // } else if (id.includes('edit') === true) {
-        //     let projectId = id.slice(4);
-        //     console.log(projectId);
-        }
-        else {
+        } else {
             console.log('trigger error');
         }
     }
@@ -29,7 +24,6 @@ const clickHandler = (() => {
     const projectHandler = (id) => {
         uiController.writeProjectPage(id);
     }
-
 
 
     return {rewriteContent, projectHandler}
