@@ -52,7 +52,15 @@ const toDoListController = (() => {
 
     const getToDoList = () => toDos();
 
-    return {addToDo, getToDoList, editToDo}
+    const remove =(toDoId) => {
+        let currentToDos = toDos(); 
+        let index = currentToDos.findIndex(toDo=>toDo.getId() === toDoId);
+        currentToDos.splice(index, 1);
+        let updatedToDos = updateToDoList(currentToDos);
+        storageCoordinator.store('todos', JSON.stringify(updatedToDos));
+    }
+
+    return {addToDo, getToDoList, editToDo, remove}
 })();
 
 export default toDoListController;

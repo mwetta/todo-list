@@ -58,6 +58,14 @@ const projectListController = (() => {
         editProject(currentProject.getId(), currentProject);
     }
 
+    // projectListController.removeToDoFromProject(toDoProject, toDoId);
+
+    const removeToDoFromProject = (toDoProjectId, toDoId) => {
+        let currentProject = projectController.retrieve(toDoProjectId);
+        currentProject.removeToDoFromProject(toDoId);
+        editProject(toDoProjectId, currentProject);
+    }
+
     const removeProject = (currentProject) => {
         
     }
@@ -74,7 +82,7 @@ const projectListController = (() => {
 
     const getProjectList = () => projects();
 
-    return {addProject, removeProject, getProjectList, addToDo, editProject, editToDo}
+    return {addProject, removeProject, getProjectList, addToDo, editProject, editToDo, removeToDoFromProject}
 })();
 
 export default projectListController;

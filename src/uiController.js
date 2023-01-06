@@ -136,13 +136,22 @@ const uiController = (() => {
                     toDoDueDate.textContent = `Due ${toDo.dueDate}`;
                     let toDoEdit = document.createElement('div');
                     toDoEdit.setAttribute('class', 'task');
-                    toDoEdit.textContent = 'Edit task';
+                    toDoEdit.textContent = 'Edit';
                     toDoEdit.addEventListener('click', () =>{
                         editToDoForm(toDo.id);
+                    })
+                    let toDoRemove = document.createElement('div');
+                    toDoRemove.setAttribute('class', 'task');
+                    toDoRemove.textContent = "x";
+                    toDoRemove.addEventListener('click', () => {
+                        toDoController.remove(toDo.id);
+                        clearMain();
+                        clickHandler.rewriteContent('remove-task');
                     })
                     taskItem.appendChild(toDoName);
                     taskItem.appendChild(toDoDueDate);
                     taskItem.appendChild(toDoEdit);
+                    taskItem.appendChild(toDoRemove);
                     tasks.appendChild(taskItem);
                 })
             tasksDiv.appendChild(tasks);

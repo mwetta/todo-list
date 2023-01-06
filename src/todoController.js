@@ -4,11 +4,8 @@ import toDoListController from './toDoListController.js';
 
 const toDoController = (() => {
     const create = (name, dueDate, description, priority, notes, project) => {
-        console.log(project);
         let newToDo = toDo(name, dueDate, description, priority, notes, project);
-        console.log(newToDo.getProject());
         projectListController.addToDo(newToDo);
-        //seems to translate correctly here
         toDoListController.addToDo(newToDo);
     }
 
@@ -21,17 +18,15 @@ const toDoController = (() => {
 
     const edit = (toDoId, newName, newDueDate, newDescription, newPriority, newNotes, newProject) => {
         let oldToDo = retrieve(toDoId).getToDo();
-        console.log(oldToDo);
         let newToDo = toDo(newName, newDueDate, newDescription, newPriority, newNotes, newProject);
-        console.log(newToDo.getToDo());
         newToDo.updateToDo(oldToDo);
-        console.log(newToDo.getToDo());
         toDoListController.editToDo(toDoId, newToDo);
     }
 
     const remove = (toDoId) => {
-        // use toDoId to identify specific project
-        // invoke remove from storage
+        let currentToDo = retrieve(toDoId);
+        toDoListController.remove(toDoId);
+        projectListController.removeToDoFromProject(currentToDo.getProject(), toDoId);
     }
 
 

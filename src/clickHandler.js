@@ -8,7 +8,7 @@ const clickHandler = (() => {
             
         } else if (id == 'projects' || id == 'new-project-button') {
             uiController.writeDefault();
-        } else if (id == 'tasks' || id == 'new-to-do-button') {
+        } else if (id == 'tasks' || id == 'new-to-do-button' || id === 'remove-task') {
             console.log('trigger todos');
             uiController.writeDefault();
         } else if (id == 'add') {
