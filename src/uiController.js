@@ -122,22 +122,28 @@ const uiController = (() => {
                 nameDiv.appendChild(tasksDiv);
             
 
-            let tasks = document.createElement('ul');
+            let tasks = document.createElement('div');
             let toDos = project.getTodos();
             toDos.forEach((toDo) => {
-                    let listItem = document.createElement('li');
-                    let link = document.createElement('p');
-                    link.textContent = toDo.name;
-                    link.setAttribute('id', toDo.id);
-                    // add event listener to task page/modal
-                    let linkEdit = document.createElement('p');
-                    linkEdit.textContent = 'Edit task';
-                    linkEdit.addEventListener('click', () =>{
+                    let taskItem = document.createElement('div');
+                    taskItem.classList.add('task-container');
+                    let toDoName = document.createElement('div');
+                    toDoName.setAttribute('class', 'task');
+                    toDoName.textContent = `${toDo.name}`;
+                    toDoName.setAttribute('id', toDo.id);
+                    let toDoDueDate = document.createElement('div');
+                    toDoDueDate.setAttribute('class', 'task');
+                    toDoDueDate.textContent = `Due ${toDo.dueDate}`;
+                    let toDoEdit = document.createElement('div');
+                    toDoEdit.setAttribute('class', 'task');
+                    toDoEdit.textContent = 'Edit task';
+                    toDoEdit.addEventListener('click', () =>{
                         editToDoForm(toDo.id);
                     })
-                    listItem.appendChild(link);
-                    listItem.appendChild(linkEdit);
-                    tasks.appendChild(listItem);
+                    taskItem.appendChild(toDoName);
+                    taskItem.appendChild(toDoDueDate);
+                    taskItem.appendChild(toDoEdit);
+                    tasks.appendChild(taskItem);
                 })
             tasksDiv.appendChild(tasks);
             })
