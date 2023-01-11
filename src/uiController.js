@@ -35,9 +35,9 @@ const uiController = (() => {
         }
         writeMain(content);
 
-        newMenuItem('upcoming');
+        // newMenuItem('upcoming');
         newMenuItem('projects');
-        newMenuItem('tasks');
+        // newMenuItem('tasks');
         newMenuItem('add');
     }
 
