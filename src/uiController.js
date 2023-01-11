@@ -37,7 +37,7 @@ const uiController = (() => {
 
         // newMenuItem('upcoming');
         newMenuItem('projects');
-        // newMenuItem('tasks');
+        // newMenuItem('tasks'); 
         newMenuItem('add');
     }
 
@@ -372,7 +372,6 @@ const uiController = (() => {
 
         let toDo = toDoController.retrieve(id);
 
-
         let name = toDo.getName();
         let description = toDo.getDescription();
         let currentDueDate = toDo.getDueDate();
@@ -485,6 +484,12 @@ const uiController = (() => {
         toDoFormButton.setAttribute('id', 'new-to-do-button');
         toDoFormButton.textContent = 'Save Edits';
         toDoFormButton.addEventListener('click', () => {
+            console.log(currentProject);
+            console.log(projectChoice.value);
+            console.log(currentProject !== projectChoice.value);
+            if (currentProject != projectChoice.value) {
+                projectListController.removeToDoFromProject(currentProject, id);
+            }
             clearMain();
             toDoController.edit(id, newToDoName.value, dueDate.value, newToDoDescription.value, priority.value,  notes.value, projectChoice.value);
             clickHandler.rewriteContent(toDoFormButton.id);
