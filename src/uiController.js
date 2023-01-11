@@ -25,7 +25,7 @@ const uiController = (() => {
                 })
                 menuItem.classList.remove('inactive');
                 menuItem.classList.add('active');
-                clearMain(menuItem.id);
+                clearMain();
                 clickHandler.rewriteContent(menuItem.id);   
             })
             let menuP = document.createElement('p');
@@ -48,7 +48,7 @@ const uiController = (() => {
         writeDefault();
     }
 
-    const clearMain = (id) => {
+    const clearMain = () => {
         let main = document.getElementById('main');
             while (main.firstChild) {
                 main.removeChild(main.firstChild);
