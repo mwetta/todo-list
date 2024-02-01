@@ -1,7 +1,8 @@
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navigation from '../components/Navbar';
-import AddProjectForm from '../components/AddProjectForm';
+// import AddProjectForm from '../components/AddProjectForm';
+import AddTaskForm from '../components/AddTaskForm';
 import { Container } from 'react-bootstrap';
 
 //TODO: Add react router
@@ -14,7 +15,7 @@ function App() {
     <>
       <Navigation />
       <Container>
-        <AddProjectForm />
+        <AddTaskForm />
       </Container>
     </>
   )

@@ -2,7 +2,8 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 
-//TODO: Track data for 
+//TODO: Track data for project
+//TODO: Update context for projects
 
 
 function AddProjectForm() {
@@ -16,7 +17,7 @@ function AddProjectForm() {
         <Form.Control type="text" placeholder="Enter a project name" />
       </Form.Group>
       <Form.Group className="mb-3" controlId="projectDescription">
-        <Form.Label>Password</Form.Label>
+        <Form.Label>Description</Form.Label>
         <Form.Control as="textarea" placeholder="Enter a project description" />
       </Form.Group>
       <Button variant="primary" type="submit">
