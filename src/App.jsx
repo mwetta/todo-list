@@ -1,9 +1,16 @@
+// CSS
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Navigation from '../components/Navbar';
+
+// Components
+
 // import AddProjectForm from '../components/AddProjectForm';
 import AddTaskForm from '../components/AddTaskForm';
-import { Container } from 'react-bootstrap';
+import AddProjectForm from '../components/AddProjectForm';
+
+// Packages etc
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 
 //TODO: Add react router
 //TODO: Define components
@@ -13,10 +20,13 @@ import { Container } from 'react-bootstrap';
 function App() {
   return (
     <>
-      <Navigation />
-      <Container>
-        <AddTaskForm />
-      </Container>
+      <Router>
+        <Routes>
+          <Route path="/" element={<AddTaskForm />} />
+          <Route path="/add-task" element={<AddTaskForm />} />
+          <Route path="/add-project" element={<AddProjectForm />} />
+        </Routes>
+      </Router>
     </>
   )
 }
