@@ -1,11 +1,23 @@
 import Button from 'react-bootstrap/Button';
 import {Card, Form, Container} from 'react-bootstrap';
 import Navigation from './Navbar';
-
+import { ProjectsContext } from '../contexts/checkProjects';
+import { useContext, useEffect } from 'react';
+import projectListController from '../utilities/projectListController';
 //TODO: Pull in project data using context
 
 
 function AddTaskForm() {
+  const { projects, setProjects } = useContext(ProjectsContext);
+  console.log(projects);
+
+  useEffect(() => {
+    const getProjects = () => {
+      setProjects(projectListController.getProjectList());
+    };
+    getProjects();
+  }, []);
+
   return (
     <>
       <Navigation />
@@ -18,9 +30,20 @@ function AddTaskForm() {
           <Form.Label>Task</Form.Label>
           <Form.Control type="text" placeholder="Enter a name for your task" />
         </Form.Group>
+        <Form.Group controlId="taskProject">
+        <Form.Label>Project</Form.Label>
+        <Form.Select aria-label="Task Project">
+          <option>Select a project</option>
+        {
+          projects.map(project => (
+            <option key={project.getId()} value={project.getId()}>{project.getName()}</option>
+          ))
+        }
+      </Form.Select>
+      </Form.Group>
         <Form.Group className="mb-3" controlId="taskDescription">
           <Form.Label>Description</Form.Label>
-          <Form.Control as="textarea" placeholder="Enter a project description" />
+          <Form.Control as="textarea" placeholder="Enter a task description" />
         </Form.Group>
         <Form.Group className="mb-3" controlId="taskDueDate">
           <Form.Label>Due Date</Form.Label>
@@ -35,6 +58,10 @@ function AddTaskForm() {
             <option value="2">Low</option>
           </Form.Select>
         </Form.Group>
+        <Form.Group className="mb-3" controlId="taskNotes">
+          <Form.Label>Notes</Form.Label>
+          <Form.Control as="textarea" placeholder="Enter task notes" />
+        </Form.Group>
         <Button variant="primary" type="submit">
           Submit
         </Button>
@@ -45,5 +72,6 @@ function AddTaskForm() {
     </>
   );
 }
+
 
 export default AddTaskForm;

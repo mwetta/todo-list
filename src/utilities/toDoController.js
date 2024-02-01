@@ -13,7 +13,6 @@ const toDoController = (() => {
         let list = toDoListController.getToDoList();
         let index = list.findIndex(toDo=>toDo.getId() === toDoId);
         return list[index];
-
     }
 
     const edit = (toDoId, newName, newDueDate, newDescription, newPriority, newNotes, newProject) => {
