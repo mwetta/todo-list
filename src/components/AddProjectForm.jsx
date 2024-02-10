@@ -4,9 +4,9 @@ import {Card, Form, Button, Container} from 'react-bootstrap';
 import projectController from '../utilities/projectController';
 import { ProjectsContext } from '../contexts/checkProjects';
 import projectListController from '../utilities/projectListController';
-//TODO: Track data for project
-//TODO: Update context for projects
-
+//Done: Store data for project
+//Done: Update context for projects
+//TODO: Redirect after submission
 
 function AddProjectForm() {
     const { projects, setProjects } = useContext(ProjectsContext);
@@ -27,7 +27,7 @@ function AddProjectForm() {
         e.preventDefault(); 
         projectController.create(projectData);
         console.log(projects);
-        // do I want the objects or do I want the string data?
+        //TODO: do I want the objects or do I want the string data?
         setProjects(projectListController.getProjectList());
         //TODO: navigate to all projects or individual project page
         console.log(projects);

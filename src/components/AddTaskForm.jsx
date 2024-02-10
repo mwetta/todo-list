@@ -4,7 +4,8 @@ import Navigation from './Navbar';
 import { ProjectsContext } from '../contexts/checkProjects';
 import { useContext, useEffect } from 'react';
 import projectListController from '../utilities/projectListController';
-//TODO: Pull in project data using context
+//Done: Pull in project data using context
+//TODO: Store task data
 
 
 function AddTaskForm() {

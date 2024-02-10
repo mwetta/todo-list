@@ -22,6 +22,7 @@ export default function Navigation() {
         <Nav className="ms-auto">
             <Nav.Link><Link to="/add-task" className="nav-link">Add Task</Link></Nav.Link>
             <Nav.Link><Link to="/add-project" className="nav-link">Add Project</Link></Nav.Link>
+            <Nav.Link><Link to="/project-list" className="nav-link">My Projects</Link></Nav.Link>
         </Nav>
         </Navbar.Collapse>
     </Container>
