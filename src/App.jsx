@@ -1,6 +1,7 @@
 // CSS
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-icons/font/bootstrap-icons.min.css';
 
 // Components
 import AddTaskForm from './components/AddTaskForm';

@@ -14,8 +14,8 @@ const projectController = (() => {
         projectListController.editProject(projectId, newProject);
     }
     
-    const remove = () => {
-
+    const remove = (projectId) => {
+        projectListController.remove(retrieve(projectId));
     }
 
     const retrieve = (projectId) => {
@@ -24,7 +24,7 @@ const projectController = (() => {
         return projectList[index];
     }
 
-    return {create, retrieve, edit};
+    return {create, retrieve, edit, remove};
 })();
 
 export default projectController;

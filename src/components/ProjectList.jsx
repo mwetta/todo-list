@@ -8,8 +8,7 @@
 
 import { ProjectsContext } from "../contexts/checkProjects";
 import Navigation from "./Navbar";
-import { Container } from "react-bootstrap";
-import { Card } from "react-bootstrap";
+import { Container, Card, Button } from "react-bootstrap";
 import { useContext } from "react";
 
 export default function ProjectList() {
@@ -24,6 +23,7 @@ export default function ProjectList() {
                         <Card.Header as="h5">{project.getName()}</Card.Header>
                         <Card.Body>
                             {project.getDescription()}
+                            <Button><i className="bi-trash"></i></Button>
                         </Card.Body>
                     </Card>
                 ))}

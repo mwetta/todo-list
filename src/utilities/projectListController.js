@@ -64,7 +64,10 @@ const projectListController = (() => {
     }
 
     const removeProject = (currentProject) => {
-        
+        let currentProjects = projects(); 
+        currentProjects = currentProjects.filter(obj => obj.id !== currentProject);
+        let newCurrentProjects = updateProjectList(currentProjects);
+        storageCoordinator.store('projects', JSON.stringify(newCurrentProjects));
     }
 
     //returns string version of all objects in project list to send to storage
