@@ -63,9 +63,11 @@ const projectListController = (() => {
         editProject(toDoProjectId, currentProject);
     }
 
-    const removeProject = (currentProject) => {
-        let currentProjects = projects(); 
-        currentProjects = currentProjects.filter(obj => obj.id !== currentProject);
+    const removeProject = (currentProject, projectList) => {
+        console.log(currentProject);
+        console.log(projectList);
+        let currentProjects = projectList.filter(obj => obj.getId() !== currentProject.getId());
+        console.log(currentProjects);
         let newCurrentProjects = updateProjectList(currentProjects);
         storageCoordinator.store('projects', JSON.stringify(newCurrentProjects));
     }

@@ -10,9 +10,17 @@ import { ProjectsContext } from "../contexts/checkProjects";
 import Navigation from "./Navbar";
 import { Container, Card, Button } from "react-bootstrap";
 import { useContext } from "react";
+import projectController from "../utilities/projectController";
+import projectListController from "../utilities/projectListController";
 
 export default function ProjectList() {
     const { projects, setProjects} = useContext(ProjectsContext);
+
+    const handleSubmit = (projectId) => {
+        console.log('handleSubmit');
+        projectController.remove(projectId, projectListController.getProjectList());
+        setProjects(projectListController.getProjectList());
+    }
 
     return (
         <>
@@ -23,7 +31,7 @@ export default function ProjectList() {
                         <Card.Header as="h5">{project.getName()}</Card.Header>
                         <Card.Body>
                             {project.getDescription()}
-                            <Button><i className="bi-trash"></i></Button>
+                            <Button variant="danger" onClick={() => handleSubmit(project.getId())} ><i className="bi-trash"></i></Button>
                         </Card.Body>
                     </Card>
                 ))}

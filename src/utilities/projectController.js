@@ -14,8 +14,9 @@ const projectController = (() => {
         projectListController.editProject(projectId, newProject);
     }
     
-    const remove = (projectId) => {
-        projectListController.remove(retrieve(projectId));
+    const remove = (projectId, projectList) => {
+        console.log(projectId);
+        projectListController.removeProject(retrieve(projectId), projectList);
     }
 
     const retrieve = (projectId) => {
