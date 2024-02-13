@@ -26,15 +26,23 @@ export default function ProjectList() {
         <>
             <Navigation />
             <Container className="mt-5">
-                {projects.map((project)=> (
-                    <Card className="mt-5" key={project.getId()}>
-                        <Card.Header as="h5">{project.getName()}</Card.Header>
+            {projects.length > 0 ? (
+                    projects.map((project)=> (
+                        <Card className="mt-5" key={project.getId()}>
+                            <Card.Header as="h5">{project.getName()}</Card.Header>
+                            <Card.Body>
+                                {project.getDescription()}
+                                <Button variant="danger" onClick={() => handleSubmit(project.getId())} ><i className="bi-trash"></i></Button>
+                            </Card.Body>
+                        </Card>
+                    ))
+                ) : (
+                    <Card classname="mt-5">
                         <Card.Body>
-                            {project.getDescription()}
-                            <Button variant="danger" onClick={() => handleSubmit(project.getId())} ><i className="bi-trash"></i></Button>
+                            Sorry, no projects.
                         </Card.Body>
                     </Card>
-                ))}
+                )}
             </Container>
         </>
     )
