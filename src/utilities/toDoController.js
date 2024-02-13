@@ -3,8 +3,8 @@ import toDo from './toDo.js'
 import toDoListController from './toDoListController.js';
 
 const toDoController = (() => {
-    const create = (name, dueDate, description, priority, notes, project) => {
-        let newToDo = toDo(name, dueDate, description, priority, notes, project);
+    const create = (data) => {
+        let newToDo = toDo(data.name, data.dueDate, data.description, data.priority, data.notes, data.project);
         projectListController.addToDo(newToDo);
         toDoListController.addToDo(newToDo);
     }
