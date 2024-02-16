@@ -9,7 +9,7 @@
 import { ProjectsContext } from "../contexts/checkProjects";
 import Navigation from "./Navbar";
 import { Container, Card, Button } from "react-bootstrap";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import projectController from "../utilities/projectController";
 import projectListController from "../utilities/projectListController";
 
@@ -21,6 +21,15 @@ export default function ProjectList() {
         projectController.remove(projectId, projectListController.getProjectList());
         setProjects(projectListController.getProjectList());
     }
+
+    // mounts project list on page load; previously if app was abandoned for a while projects wouldn't show
+    useEffect(() => {
+        const getProjects =  () => {
+            setProjects(projectListController.getProjectList());
+        };
+      
+        getProjects();
+      }, []); 
 
     return (
         <>
@@ -37,7 +46,7 @@ export default function ProjectList() {
                         </Card>
                     ))
                 ) : (
-                    <Card classname="mt-5">
+                    <Card className="mt-5">
                         <Card.Body>
                             Sorry, no projects.
                         </Card.Body>
