@@ -70,7 +70,7 @@ function AddTaskForm() {
         </Form.Group>
         <Form.Group className="mb-3" controlId="taskDueDate">
           <Form.Label>Due Date</Form.Label>
-          <Form.Control type="date" name="date" onChange={handleChange}/>
+          <Form.Control type="date" name="dueDate" onChange={handleChange}/>
         </Form.Group>
         <Form.Group className="mb-3" controlId="taskPriority">
           <Form.Label>Priority</Form.Label>

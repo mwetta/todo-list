@@ -8,7 +8,7 @@
 
 import { ProjectsContext } from "../contexts/checkProjects";
 import Navigation from "./Navbar";
-import { Container, Card, Button } from "react-bootstrap";
+import { Container, Card, Accordion, ListGroup, Dropdown } from "react-bootstrap";
 import { useContext, useEffect } from "react";
 import projectController from "../utilities/projectController";
 import projectListController from "../utilities/projectListController";
@@ -16,8 +16,15 @@ import projectListController from "../utilities/projectListController";
 export default function ProjectList() {
     const { projects, setProjects} = useContext(ProjectsContext);
 
-    const handleSubmit = (projectId) => {
-        console.log('handleSubmit');
+    projects.forEach(project => {
+        let toDos = project.getTodos();
+        toDos.forEach(todo => {
+            console.log(todo)
+        })
+    })
+
+    const handleDelete = (projectId) => {
+        console.log('handleDelete');
         projectController.remove(projectId, projectListController.getProjectList());
         setProjects(projectListController.getProjectList());
     }
@@ -38,10 +45,24 @@ export default function ProjectList() {
             {projects.length > 0 ? (
                     projects.map((project)=> (
                         <Card className="mt-5" key={project.getId()}>
-                            <Card.Header as="h5">{project.getName()}</Card.Header>
+                            <Card.Header as="h5" className="d-flex justify-content-between align-items-center">
+                                {project.getName()} 
+                                <Dropdown>
+                                    <Dropdown.Toggle as="i" className="bi-three-dots"></Dropdown.Toggle>
+                                    
+                                    <Dropdown.Menu>
+                                        <Dropdown.Item onClick={() => handleDelete(project.getId())}>Delete project</Dropdown.Item>
+                                    </Dropdown.Menu>
+                                </Dropdown>
+                            </Card.Header>
                             <Card.Body>
                                 {project.getDescription()}
-                                <Button variant="danger" onClick={() => handleSubmit(project.getId())} ><i className="bi-trash"></i></Button>
+                                <Accordion className="mt-3 mb-3">
+                                    {project.getTodos().map((todo) => (
+                                        <Task key={todo.id} todo={todo}></Task>
+                                    ))}
+                                </Accordion>
+                                {/* <Button variant="danger" onClick={() => handleSubmit(project.getId())} ><i className="bi-trash"></i></Button> */}
                             </Card.Body>
                         </Card>
                     ))
@@ -56,3 +77,17 @@ export default function ProjectList() {
         </>
     )
 }
+
+const Task = ({todo}) =>  {
+    return (
+        <Accordion.Item eventKey={todo.id}> 
+          <Accordion.Header>{todo.dueDate} {todo.name}</Accordion.Header>
+          <Accordion.Body>
+            <ListGroup className="mb-3">
+                <ListGroup.Item>Description: {todo.description}</ListGroup.Item>
+                <ListGroup.Item>Notes: {todo.notes}</ListGroup.Item>
+            </ListGroup>
+          </Accordion.Body>
+        </Accordion.Item>
+    );
+  }
