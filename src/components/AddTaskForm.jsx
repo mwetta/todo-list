@@ -6,19 +6,18 @@ import { useContext, useEffect, useState } from 'react';
 import projectListController from '../utilities/projectListController';
 import toDoController from '../utilities/toDoController';
 //Done: Pull in project data using context
-//TODO: Store task data
+//Done: Store task data
 
 
-function AddTaskForm() {
+function AddTaskForm({ projectId }) {
   const { projects, setProjects } = useContext(ProjectsContext);
-  console.log(projects);
   const [taskData, setTaskData] = useState({
     name:'',
     dueDate:'',
     description:'',
     priority:'',
     notes:'',
-    project:''
+    project: projectId
   })
 
   const handleChange = (e) => {

@@ -1,27 +1,24 @@
-// Done: Page will get all projects from local storage / reference all projects from context
-// Done: For each project, render a project component
-//         Done: Title
-//         Done: Description
-//         TODO: Number of associated tasks
-//     TODO: On carat click, render each task OR render "Add Task button"
-//         TODO: Add task button should take projectId and select it from the dropdown; Modal? 
-
+import React, { useState, useContext, useEffect } from "react";
 import { ProjectsContext } from "../contexts/checkProjects";
 import Navigation from "./Navbar";
-import { Container, Card, Accordion, ListGroup, Dropdown } from "react-bootstrap";
-import { useContext, useEffect } from "react";
+import { Button, Container, Card, Accordion, Dropdown, Modal, Form, ListGroup } from "react-bootstrap";
 import projectController from "../utilities/projectController";
 import projectListController from "../utilities/projectListController";
+import toDoController from '../utilities/toDoController';
+
+//TODO: debug why modal isn't inheriting projectId correctly
+//TODO: Copy add tasks option to dots menu
+//TODO: Add projects modal when there are no projects
+//TODO: Decide if I want add projects and add tasks to always just be modals -- Why/why not
+
 
 export default function ProjectList() {
     const { projects, setProjects} = useContext(ProjectsContext);
+    const [show, setShow] = useState(false);
+    const [selectedProjectId, setSelectedProjectId] = useState(null); // State to hold the selected projectId
 
-    projects.forEach(project => {
-        let toDos = project.getTodos();
-        toDos.forEach(todo => {
-            console.log(todo)
-        })
-    })
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     const handleDelete = (projectId) => {
         console.log('handleDelete');
@@ -29,14 +26,18 @@ export default function ProjectList() {
         setProjects(projectListController.getProjectList());
     }
 
-    // mounts project list on page load; previously if app was abandoned for a while projects wouldn't show
+    const handleAddTasks = (projectId) => {
+        // Handle adding tasks here
+        setSelectedProjectId(projectId);
+        handleShow(); // Open the modal when adding tasks
+    }
+
     useEffect(() => {
         const getProjects =  () => {
             setProjects(projectListController.getProjectList());
         };
-      
         getProjects();
-      }, []); 
+    }, []);
 
     return (
         <>
@@ -58,11 +59,14 @@ export default function ProjectList() {
                             <Card.Body>
                                 {project.getDescription()}
                                 <Accordion className="mt-3 mb-3">
-                                    {project.getTodos().map((todo) => (
-                                        <Task key={todo.id} todo={todo}></Task>
-                                    ))}
+                                {project.getTodos().length === 0 ? (
+                                    <Button onClick={()=> handleAddTasks(project.getId())}>Add Tasks</Button>
+                                ) : (
+                                    project.getTodos().map((todo) => (
+                                    <Task key={todo.id} todo={todo}></Task>
+                                    ))
+                                )}
                                 </Accordion>
-                                {/* <Button variant="danger" onClick={() => handleSubmit(project.getId())} ><i className="bi-trash"></i></Button> */}
                             </Card.Body>
                         </Card>
                     ))
@@ -74,6 +78,7 @@ export default function ProjectList() {
                     </Card>
                 )}
             </Container>
+            <AddTaskFormModal show={show} handleClose={handleClose} projectId={selectedProjectId} projects={projects} setProjects={setProjects} />
         </>
     )
 }
@@ -90,4 +95,88 @@ const Task = ({todo}) =>  {
           </Accordion.Body>
         </Accordion.Item>
     );
-  }
+}
+
+
+function AddTaskFormModal({ show, handleClose, projectId, projects, setProjects }) {
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setTaskData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+      };
+
+      const [taskData, setTaskData] = useState({
+        name:'',
+        dueDate:'',
+        description:'',
+        priority:'',
+        notes:'',
+        project: projectId && projects.find(project => project.getId() === projectId) ? projectId : ''
+    })
+    const handleSubmit = () => {
+        // Handle submit logic here
+        // Close the modal after submitting
+        handleClose();
+        toDoController.create(taskData);
+    };
+
+    return (
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Add New Task</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+          <Form>
+        <Form.Group className="mb-3" controlId="taskName">
+          <Form.Label>Task</Form.Label>
+          <Form.Control type="text" placeholder="Enter a name for your task" name="name" onChange={handleChange}/>
+        </Form.Group>
+        <Form.Group controlId="taskProject">
+        <Form.Label>Project</Form.Label>
+        <Form.Select aria-label="Task Project" name="project" value={taskData.project} onChange={handleChange}>
+          <option>Select a project</option>
+        {
+          projects.map(project => (
+            <option key={project.getId()} value={project.getId()}>{project.getName()}</option>
+          ))
+        }
+      </Form.Select>
+      </Form.Group>
+        <Form.Group className="mb-3" controlId="taskDescription">
+          <Form.Label>Description</Form.Label>
+          <Form.Control as="textarea" placeholder="Enter a task description" name="description" onChange={handleChange}/>
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="taskDueDate">
+          <Form.Label>Due Date</Form.Label>
+          <Form.Control type="date" name="dueDate" onChange={handleChange}/>
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="taskPriority">
+          <Form.Label>Priority</Form.Label>
+          <Form.Select aria-label="Task priority" name="priority" onChange={handleChange}>
+            <option>Select a priority</option>
+            <option value="0">High</option>
+            <option value="1">Medium</option>
+            <option value="2">Low</option>
+          </Form.Select>
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="taskNotes">
+          <Form.Label>Notes</Form.Label>
+          <Form.Control as="textarea" placeholder="Enter task notes" name="notes" onChange={handleChange}/>
+        </Form.Group>
+      </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            {/* Call handleSubmit function on Save Changes button click */}
+            <Button variant="primary" onClick={handleSubmit}>
+              Submit
+            </Button>
+          </Modal.Footer>
+        </Modal>
+    );
+}
