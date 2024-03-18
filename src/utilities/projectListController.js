@@ -1,4 +1,3 @@
-import { hoursToMinutes } from 'date-fns';
 import projectController from './projectController.js'
 import Project from './Project.js'
 import storageCoordinator from './storageCoordinator.js'
@@ -64,8 +63,13 @@ const projectListController = (() => {
         editProject(toDoProjectId, currentProject);
     }
 
-    const removeProject = (currentProject) => {
-        
+    const removeProject = (currentProject, projectList) => {
+        console.log(currentProject);
+        console.log(projectList);
+        let currentProjects = projectList.filter(obj => obj.getId() !== currentProject.getId());
+        console.log(currentProjects);
+        let newCurrentProjects = updateProjectList(currentProjects);
+        storageCoordinator.store('projects', JSON.stringify(newCurrentProjects));
     }
 
     //returns string version of all objects in project list to send to storage

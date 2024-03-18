@@ -2,8 +2,8 @@ import Project from './Project.js'
 import projectListController from './projectListController.js'
 
 const projectController = (() => {
-    const create = (name, description) => {
-        let newProject = Project(name, description);
+    const create = (data) => {
+        let newProject = Project(data.projectName, data.projectDescription);
         projectListController.addProject(newProject);
     }
 
@@ -14,8 +14,9 @@ const projectController = (() => {
         projectListController.editProject(projectId, newProject);
     }
     
-    const remove = () => {
-
+    const remove = (projectId, projectList) => {
+        console.log(projectId);
+        projectListController.removeProject(retrieve(projectId), projectList);
     }
 
     const retrieve = (projectId) => {
@@ -24,7 +25,7 @@ const projectController = (() => {
         return projectList[index];
     }
 
-    return {create, retrieve, edit};
+    return {create, retrieve, edit, remove};
 })();
 
 export default projectController;

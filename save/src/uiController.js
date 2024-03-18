@@ -1,8 +1,8 @@
-import projectController from './projectController'
-import projectListController from './projectListController.js'
+import projectController from '../../src/utilities/projectController.js'
+import projectListController from '../../src/utilities/projectListController.js'
 import { format } from 'date-fns'
 import clickHandler from './clickHandler.js'
-import toDoController from './toDoController.js'
+import toDoController from '../../src/utilities/toDoController.js'
 
 const uiController = (() => {
 
