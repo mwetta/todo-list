@@ -17,7 +17,8 @@ export default function ProjectList() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    
+    const handleProjectModalClose = () => setShowProjectModal(false);
+    const handleProjectModalShow = () => setShowProjectModal(true);
 
 
 
@@ -32,6 +33,7 @@ export default function ProjectList() {
         setSelectedProjectId(projectId);
         handleShow(); // Open the modal when adding tasks
     }
+
 
     useEffect(() => {
         const getProjects =  () => {
@@ -78,8 +80,13 @@ export default function ProjectList() {
                         </Card.Body>
                     </Card>
                 )}
+            
+            <Button onClick={handleProjectModalShow}>Add Project</Button>
             </Container>
-            <AddTaskFormModal show={show} handleClose={handleClose} projectId={selectedProjectId} projects={projects} />
+
+            
+            <AddProjectFormModal showProjectModal={showProjectModal} handleProjectModalClose={handleProjectModalClose} projects={projects} updateProjects={() => setProjects(projectListController.getProjectList())} />
+            <AddTaskFormModal show={show} handleClose={handleClose} projectId={selectedProjectId} projects={projects} updateProjects={() => setProjects(projectListController.getProjectList())}/>
         </>
     )
 }
@@ -98,8 +105,59 @@ const Task = ({todo}) =>  {
     );
 }
 
+function AddProjectFormModal ({ showProjectModal, handleProjectModalClose, updateProjects }) {
 
-function AddTaskFormModal({ show, handleClose, projectId, projects }) {
+    const [projectData, setProjectData] = useState({
+        projectName:'',
+        projectDescription:''
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setProjectData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+      };
+
+    const handleSubmit = () => {
+        // toDoController.create(taskData);
+        projectController.create(projectData);
+        updateProjects();
+        handleProjectModalClose();
+    };
+
+    return (
+        <Modal show={showProjectModal} onHide={handleProjectModalClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Add New Project</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form>
+                <Form.Group className="mb-3" controlId="projectName">
+                    <Form.Label>Project Name</Form.Label>
+                    <Form.Control type="text" placeholder="Enter a project name" name="projectName" onChange={handleChange} />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="projectDescription">
+                    <Form.Label>Description</Form.Label>
+                    <Form.Control as="textarea" placeholder="Enter a project description" name="projectDescription" onChange={handleChange}/>
+                </Form.Group>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleProjectModalClose}>
+              Close
+            </Button>
+            {/* Call handleSubmit function on Save Changes button click */}
+            <Button variant="primary" onClick={handleSubmit}>
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Modal>
+    );
+}
+
+function AddTaskFormModal({ show, handleClose, projectId, projects, updateProjects }) {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -129,8 +187,9 @@ function AddTaskFormModal({ show, handleClose, projectId, projects }) {
     }, [projectId, projects]);
 
     const handleSubmit = () => {
-        handleClose();
         toDoController.create(taskData);
+        updateProjects();
+        handleClose();
     };
 
     return (
