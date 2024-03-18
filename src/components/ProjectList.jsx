@@ -6,19 +6,20 @@ import projectController from "../utilities/projectController";
 import projectListController from "../utilities/projectListController";
 import toDoController from '../utilities/toDoController';
 
-//TODO: debug why modal isn't inheriting projectId correctly
-//TODO: Copy add tasks option to dots menu
-//TODO: Add projects modal when there are no projects
-//TODO: Decide if I want add projects and add tasks to always just be modals -- Why/why not
-
+import AddTaskForm from './AddTaskForm'; // Import the AddTaskForm component
 
 export default function ProjectList() {
     const { projects, setProjects} = useContext(ProjectsContext);
     const [show, setShow] = useState(false);
+    const [showProjectModal, setShowProjectModal] = useState(false);
     const [selectedProjectId, setSelectedProjectId] = useState(null); // State to hold the selected projectId
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    
+
+
 
     const handleDelete = (projectId) => {
         console.log('handleDelete');
@@ -60,7 +61,7 @@ export default function ProjectList() {
                                 {project.getDescription()}
                                 <Accordion className="mt-3 mb-3">
                                 {project.getTodos().length === 0 ? (
-                                    <Button onClick={()=> handleAddTasks(project.getId())}>Add Tasks</Button>
+                                    <Button onClick={()=> handleAddTasks(project.getId())}>Add Todos</Button>
                                 ) : (
                                     project.getTodos().map((todo) => (
                                     <Task key={todo.id} todo={todo}></Task>
@@ -78,7 +79,7 @@ export default function ProjectList() {
                     </Card>
                 )}
             </Container>
-            <AddTaskFormModal show={show} handleClose={handleClose} projectId={selectedProjectId} projects={projects} setProjects={setProjects} />
+            <AddTaskFormModal show={show} handleClose={handleClose} projectId={selectedProjectId} projects={projects} />
         </>
     )
 }
@@ -98,7 +99,7 @@ const Task = ({todo}) =>  {
 }
 
 
-function AddTaskFormModal({ show, handleClose, projectId, projects, setProjects }) {
+function AddTaskFormModal({ show, handleClose, projectId, projects }) {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -114,11 +115,20 @@ function AddTaskFormModal({ show, handleClose, projectId, projects, setProjects 
         description:'',
         priority:'',
         notes:'',
-        project: projectId && projects.find(project => project.getId() === projectId) ? projectId : ''
+        project: projectId
     })
+
+    useEffect(() => {
+        // Update project in taskData if projectId is not null and a project with that id exists
+        if (projectId && projects.find(project => project.getId() === projectId)) {
+            setTaskData(prevData => ({
+                ...prevData,
+                project: projectId
+            }));
+        }
+    }, [projectId, projects]);
+
     const handleSubmit = () => {
-        // Handle submit logic here
-        // Close the modal after submitting
         handleClose();
         toDoController.create(taskData);
     };
@@ -174,7 +184,7 @@ function AddTaskFormModal({ show, handleClose, projectId, projects, setProjects 
             </Button>
             {/* Call handleSubmit function on Save Changes button click */}
             <Button variant="primary" onClick={handleSubmit}>
-              Submit
+              Save Changes
             </Button>
           </Modal.Footer>
         </Modal>
