@@ -6,6 +6,8 @@ import projectController from "../utilities/projectController";
 import projectListController from "../utilities/projectListController";
 import toDoController from '../utilities/toDoController';
 
+import AddTaskForm from './AddTaskForm'; // Import the AddTaskForm component
+
 export default function ProjectList() {
     const { projects, setProjects} = useContext(ProjectsContext);
     const [show, setShow] = useState(false);
