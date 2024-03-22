@@ -63,18 +63,13 @@ export default function ProjectList() {
                                 {project.getDescription()}
                                 <Accordion className="mt-3 mb-3">
                                 {project.getTodos().length === 0 ? (
-                                    <Button onClick={()=> handleAddTasks(project.getId())}>Add Tasks</Button>
+                                    <Button onClick={()=> handleAddTasks(project.getId())}>Add Todos</Button>
                                 ) : (
                                     project.getTodos().map((todo) => (
                                     <Task key={todo.id} todo={todo}></Task>
                                     ))
                                 )}
                                 </Accordion>
-                                {project.getTodos().length > 0 ? (
-                                    <Button as="i" className="bi bi-plus-square-fill" onClick={()=> handleAddTasks(project.getId())}></Button>
-                                ) : (
-                                    <p></p>
-                                )}
                             </Card.Body>
                         </Card>
                     ))
